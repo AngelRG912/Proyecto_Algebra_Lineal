@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MatrixCalc</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/10.1.0/math.min.js"></script>
     <link rel="stylesheet" href="/frontend/src/styles/index.css" />
   </head>
   <body>
@@ -26,9 +27,9 @@
           </button>
         </div>
         <div class="elementnavbar">
-          <a href="/frontend/public/index.html"
-            ><img src="/frontend/src/assets/svg/homeW.svg" alt="Inicio"
-          /></a>
+          <a href="/frontend/public/index.html">
+            <img src="/frontend/src/assets/svg/homeW.svg" alt="Inicio" />
+          </a>
         </div>
       </section>
     </header>
@@ -36,14 +37,19 @@
       <section class="matrix-input">
         <h2>Calculadora de Matrices</h2>
         <p>Puedes agregar filas y columnas de manera dinámica:</p>
-        <div class="matrix-controls">
+        <div class="matrix-controls" view="flex">
           <button onclick="addRow()">Agregar Fila</button>
           <button onclick="addColumn()">Agregar Columna</button>
-          <button onclick="resetMatrix()">Resetear Matriz</button>
+          <label class="custom-button" for="fileInput">Subir Matriz</label>
+          <input
+            class="file-upload"
+            type="file"
+            id="fileInput"
+            accept=".txt, .pdf"
+          />
+          <button onclick="resetMatrix()">Limpiar Matriz</button>
         </div>
-        <div id="matrix-container">
-          <!-- Aquí se generará la matriz en una cuadrícula -->
-        </div>
+        <div id="matrix-container"></div>
       </section>
       <section class="matrix-results">
         <h2>Resultados</h2>
