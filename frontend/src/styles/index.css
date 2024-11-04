@@ -9,6 +9,7 @@ body {
   width: auto;
   height: auto;
   font-family: Arial, sans-serif;
+  background-color: #000000;
   color: #303030;
   display: flex;
   flex-direction: column;
@@ -17,6 +18,7 @@ body {
 /* Encabezado */
 header {
   width: auto;
+  height: 15%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -63,6 +65,7 @@ header .elementnavbar a img {
 /* Contenido Principal */
 main {
   width: auto;
+  height: 80%;
   background-color: #3a3a3a;
   display: flex;
   justify-content: center;
@@ -197,6 +200,7 @@ input[type="text"] {
 /* Pie de página */
 footer {
   width: auto;
+  height: 5%;
   text-align: center;
   padding: 1rem;
   background-color: #000000;
