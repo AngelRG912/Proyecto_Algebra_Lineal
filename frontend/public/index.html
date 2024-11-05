@@ -10,7 +10,9 @@
   <body>
     <header>
       <section class="logo">
-        <img src="/frontend/src/assets/svg/logoW.svg" alt="MatrixCalc Logo" />
+        <a href="/frontend/public/index.html">
+          <img src="/frontend/src/assets/svg/logoW.svg" alt="MatrixCalc Logo" />
+        </a>
       </section>
       <section class="navbar">
         <div class="menu">
@@ -26,29 +28,60 @@
             Gauss-Jordan Humano
           </button>
         </div>
+        <!-- 
         <div class="elementnavbar">
           <a href="/frontend/public/index.html">
             <img src="/frontend/src/assets/svg/homeW.svg" alt="Inicio" />
           </a>
         </div>
+        -->
       </section>
     </header>
     <main>
       <section class="matrix-input">
         <h2>Calculadora de Matrices</h2>
         <div class="matrix-controls" view="flex">
-          <button onclick="addRow()">Agregar Fila</button>
-          <button onclick="addColumn()">Agregar Columna</button>
-          <label class="custom-button" for="fileInput">Subir Matriz</label>
+          <button onclick="addRow()" class="matrix-button">
+            <img
+              class="img-matrix-controls"
+              src="/frontend/src/assets/svg/anadir-fila-blanco.svg"
+              alt="Agregar Fila"
+            />
+            <span>Agregar Fila</span>
+          </button>
+          <button onclick="addColumn()" class="matrix-button">
+            <img
+              class="img-matrix-controls"
+              src="/frontend/src/assets/svg/anadir-columna-blanco.svg"
+              alt="Agregar Columna"
+            />
+            <span>Agregar Columna</span>
+          </button>
+          <label class="matrix-button custom-button" for="fileInput">
+            <img
+              class="img-matrix-controls"
+              src="/frontend/src/assets/svg/subir-matriz-blanco.svg"
+              alt="Subir Matriz"
+            />
+            <span>Subir Matriz</span>
+          </label>
           <input
             class="file-upload"
             type="file"
             id="fileInput"
             accept=".txt, .pdf"
           />
-          <button onclick="resetMatrix()">Limpiar Matriz</button>
+          <button onclick="resetMatrix()" class="matrix-button">
+            <img
+              class="img-matrix-controls"
+              src="/frontend/src/assets/svg/limpiar-matriz-blanco.svg"
+              alt="Limpiar Matriz"
+            />
+            <span>Limpiar Matriz</span>
+          </button>
         </div>
-        <div id="matrix-container"></div>
+
+        <div class="border-matrix" id="matrix-container"></div>
       </section>
       <section class="matrix-results">
         <h2>Resultados</h2>

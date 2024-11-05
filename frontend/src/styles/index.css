@@ -17,9 +17,8 @@ body {
 
 /* Encabezado */
 header {
-  width: auto;
-  height: 15%;
   display: flex;
+  width: auto;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
@@ -64,10 +63,9 @@ header .elementnavbar a img {
 
 /* Contenido Principal */
 main {
-  width: auto;
-  height: 80%;
-  background-color: #3a3a3a;
   display: flex;
+  width: auto;
+  background-color: #3a3a3a;
   justify-content: center;
   flex-direction: column;
   padding: 2rem;
@@ -76,12 +74,14 @@ main {
 
 .matrix-input,
 .matrix-results {
+  display: flex;
   width: auto;
+  height: auto;
   background-color: #ffffff;
   display: inline-block;
   padding: 1rem;
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 10px rgb(0, 0, 0);
 }
 
 .matrix-input h2,
@@ -90,21 +90,42 @@ main {
   margin-bottom: 1rem;
 }
 
-.matrix-input,
-#matrix-container {
-  width: 100%;
-  overflow-x: auto; /* Añade scroll horizontal si el contenido excede el ancho */
-  white-space: nowrap; /* Evita que los inputs se rompan en varias líneas */
-  box-sizing: border-box;
-  padding: 10px;
-}
-
-/* Ajuste para el contenedor de la matriz */
+/* Contenedor de los de agregar/subir/limpiar botones */
 .matrix-controls {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
   margin-bottom: 10px;
+  align-items: center;
+}
+
+/*Subir Matriz*/
+.file-upload {
+  display: none;
+}
+
+.custom-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: fit-content;
+  margin-top: 10px;
+  padding: 10px 15px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.custom-button:hover {
+  background-color: #555;
+}
+
+.img-matrix-controls {
+  width: 24px;
+  height: 24px;
 }
 
 .matrix-controls button {
@@ -116,40 +137,54 @@ main {
   border-radius: 5px;
   cursor: pointer;
   font-size: 1rem;
+  text-align: right;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-align: center;
+}
+
+span {
+  margin-left: 10px;
 }
 
 .matrix-controls button:hover {
   background-color: #555;
 }
 
+/* Contenedor para ingresar la matriz*/
 #matrix-container {
   width: auto;
   padding: 10px;
-  border: 1px solid #000000;
+  /*border: 1px solid #ff0202;
+  box-sizing: border-box;*/
+}
+
+table {
+  border: 1px solid #ff0202;
   border-top: none;
   border-bottom: none;
   box-sizing: border-box;
 }
 
-input[type="text"] {
-  width: 80px;
-  border: 1px solid #cecece3e;
-  min-width: 80px; /* Ancho mínimo para los inputs */
-  box-sizing: border-box;
-  display: inline-block;
-  text-align: center;
+td {
+  background-color: #000000;
 }
 
 #matrix-container input {
-  width: 100%; /* Asegura que cada input ocupe el ancho de su celda */
-  height: 100%; /* Asegura que cada input ocupe la altura de su celda */
-  box-sizing: border-box; /* Asegura que el padding y el borde no afecten el tamaño total */
-  font-size: 1.2em; /* Tamaño de fuente más grande para una mejor legibilidad */
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  background-color: #000000;
+  border: 1px solid #ffffff;
+  min-width: 80px;
+  /*max-width: 100px;*/
+  box-sizing: border-box;
+  font-size: 1.2em;
   padding: 5px; /* Añadir espacio interno para mejorar la interacción */
   text-align: center;
   text-overflow: ellipsis; /* Añade puntos suspensivos si el texto es demasiado largo */
   white-space: nowrap; /* Evita que el texto se envuelva en una nueva línea */
-  max-width: 100px; /* Limita el ancho máximo del input */
 }
 
 /* Resultados */
@@ -176,31 +211,9 @@ input[type="text"] {
   background-color: #555;
 }
 
-/*Subir Matriz*/
-.file-upload {
-  display: none;
-}
-
-.custom-button {
-  height: fit-content;
-  margin-top: 10px;
-  padding: 10px 15px;
-  background-color: #333;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 1rem;
-}
-
-.custom-button:hover {
-  background-color: #555;
-}
-
 /* Pie de página */
 footer {
   width: auto;
-  height: 5%;
   text-align: center;
   padding: 1rem;
   background-color: #000000;
