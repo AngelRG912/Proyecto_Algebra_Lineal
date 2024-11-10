@@ -4,36 +4,20 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MatrixCalc</title>
-    <link rel="stylesheet" href="/frontend/src/styles/index.css" />
+    <link rel="stylesheet" href="/frontend/src/styles/calculadora.css" />
   </head>
   <body>
     <header>
       <section class="logo">
-        <a href="/frontend/public/index.html">
-          <img src="/frontend/src/assets/svg/logoW.svg" alt="MatrixCalc Logo" />
+        <a href="../../../index.html">
+          <img src="/frontend/src/assets/svg/logoW.svg" alt="MatrixCalc-Logo" />
         </a>
       </section>
-      <section class="navbar">
-        <div class="menu">
-          <button onclick="performOperation('gauss-jordan')">
-            Gauss-Jordan
-          </button>
-          <button onclick="performOperation('sel')">S. E. L.</button>
-          <button onclick="performOperation('inverse')">Inversa</button>
-          <button onclick="performOperation('determinant')">
-            Determinante
-          </button>
-          <button onclick="performOperation('gauss-jordan-human')">
-            Gauss-Jordan Humano
-          </button>
-        </div>
-        <!-- 
         <div class="elementnavbar">
-          <a href="/frontend/public/index.html">
+          <a href="../../../index.html">
             <img src="/frontend/src/assets/svg/homeW.svg" alt="Inicio" />
           </a>
         </div>
-        -->
       </section>
     </header>
     <main>
@@ -83,18 +67,36 @@
             <span>Resetear Matriz</span>
           </button>
         </div>
-
         <div class="border-matrix" id="matrix-container"></div>
+        <div class="matrix-controls" view="flex">
+          <button class="matrix-button">
+            <img
+            class="img-matrix-controls"
+            src="/frontend/src/assets/svg/calcular-matriz.svg"
+            alt="Calcular Matriz"
+          />
+          <span>Calcular</span>
+        </button>
       </section>
+        </div>
+        
       <section class="matrix-results">
         <h2>Resultados</h2>
         <div id="results-container"></div>
-        <button onclick="copyResult()">Copiar Resultado</button>
+        <button onclick="copyResult()">
+          <img
+            class="img-matrix-controls"
+            src="/frontend/src/assets/svg/copiar-resultado.svg"
+            alt="Copiar Resultado"
+          />
+          <span>Copiar Resultado</span>
+        </button>
       </section>
     </main>
     <footer>
       <p>Derechos reservados MatrixCalc©</p>
     </footer>
-    <script src="/frontend/src/scripts/index.js" defer></script>
+    <script src="/frontend/src/scripts/calculadora.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/10.1.0/math.min.js"></script>
   </body>
 </html>

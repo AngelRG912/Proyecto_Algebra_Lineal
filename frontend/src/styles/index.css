@@ -7,18 +7,18 @@
 /* General */
 body {
   width: auto;
-  height: auto;
+  height: 100%;
   font-family: Arial, sans-serif;
   background-color: #000000;
-  color: #303030;
-  display: flex;
-  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 /* Encabezado */
 header {
   display: flex;
   width: auto;
+  height: 10%;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
@@ -31,193 +31,72 @@ header .logo img {
   height: 50px;
 }
 
-header .navbar {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.navbar .menu {
-  display: flex;
-  gap: 10px;
-}
-
-header .navbar .menu button {
-  background-color: #333;
-  color: #fff;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 1rem;
-}
-
-header .navbar .menu button:hover {
-  background-color: #555;
-}
-
-header .elementnavbar a img {
-  height: 32px;
-  width: 32px;
-}
-
 /* Contenido Principal */
 main {
   display: flex;
   width: auto;
+  align-items: center;
   background-color: #3a3a3a;
   justify-content: center;
   flex-direction: column;
-  padding: 2rem;
-  gap: 20px;
+  padding: 8%;
 }
 
-.matrix-input,
-.matrix-results {
+.container-menu {
   display: flex;
-  width: auto;
-  height: auto;
+  flex-direction: column;
+  width: 350px;
   background-color: #ffffff;
-  display: inline-block;
-  padding: 1rem;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgb(0, 0, 0);
+  align-items: center;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
 }
 
-.matrix-input h2,
-.matrix-results h2 {
+.container-menu h2 {
   color: #000000;
   margin-bottom: 1rem;
 }
 
-/* Contenedor de los de agregar/subir/limpiar botones */
-.matrix-controls {
+.menu {
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 10px;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  height: 70%;
+  width: fit-content;
 }
 
-/*Subir Matriz*/
-.file-upload {
-  display: none;
-}
-
-.custom-button {
+.menu button {
   display: flex;
   align-items: center;
   justify-content: center;
   height: fit-content;
-  margin-top: 10px;
-  padding: 10px 15px;
-  background-color: #333;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 1rem;
-}
-
-.custom-button:hover {
-  background-color: #555;
-}
-
-.img-matrix-controls {
-  width: 24px;
-  height: 24px;
-}
-
-.matrix-controls button {
-  padding: 10px 15px;
-  margin-top: 10px;
-  background-color: #333;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 1rem;
-  text-align: right;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  text-align: center;
-}
-
-span {
-  margin-left: 10px;
-}
-
-.matrix-controls button:hover {
-  background-color: #555;
-}
-
-/* Contenedor para ingresar la matriz*/
-#matrix-container {
-  width: auto;
-  padding: 10px;
-  /*border: 1px solid #ff0202;
-  box-sizing: border-box;*/
-}
-
-table {
-  border: 1px solid #3a3a3a;
-  border-top: none;
-  border-bottom: none;
-  box-sizing: border-box;
-}
-
-td {
-  background-color: #ffffff;
-}
-
-#matrix-container input {
-  display: inline-block;
   width: 100%;
-  height: 100%;
-  background-color: #ffffff;
-  border: 1px solid #9d9d9d79;
-  min-width: 80px;
-  /*max-width: 100px;*/
-  box-sizing: border-box;
-  font-size: 1.2em;
-  padding: 5px; /* Añadir espacio interno para mejorar la interacción */
-  text-align: center;
-  text-overflow: ellipsis; /* Añade puntos suspensivos si el texto es demasiado largo */
-  white-space: nowrap; /* Evita que el texto se envuelva en una nueva línea */
-}
-
-/* Resultados */
-#results-container {
-  width: auto;
-  padding: 1rem;
-  background-color: #e9f5ff;
-  border-radius: 5px;
-  min-height: 100px;
-  margin-bottom: 1rem;
-}
-
-.matrix-results button {
+  margin-top: 10px;
   padding: 10px 15px;
   background-color: #333;
-  color: #fff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   font-size: 1rem;
 }
-
-.matrix-results button:hover {
+.menu button:hover {
   background-color: #555;
 }
 
-/* Pie de página */
+a {
+  text-decoration: none;
+  color: #fff;
+}
+/*Pie de página*/
 footer {
   width: auto;
-  text-align: center;
-  padding: 1rem;
   background-color: #000000;
   color: #fff;
+  text-align: center;
+  align-items: center;
+  padding: 1rem;
 }
 
 /* Ajuste de botones y secciones en pantallas pequeñas */
@@ -227,17 +106,7 @@ footer {
     align-items: center;
   }
 
-  .matrix-input,
-  .matrix-results {
-    width: auto;
-  }
-
-  .navbar .menu {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  header .navbar .menu button {
+  header {
     width: auto;
   }
 }
@@ -247,15 +116,5 @@ footer {
   header,
   footer {
     text-align: center;
-  }
-
-  .matrix-controls button,
-  .matrix-controls input {
-    width: auto;
-  }
-
-  .navbar .menu button {
-    width: auto;
-    margin-bottom: 5px;
   }
 }

@@ -1,0 +1,228 @@
+* {
+  margin: 0;
+  padding: 0;
+  width: auto;
+}
+
+/* General */
+body {
+  width: auto;
+  height: auto;
+  font-family: Arial, sans-serif;
+  background-color: #000000;
+  color: #303030;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Encabezado */
+header {
+  display: flex;
+  width: auto;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: #000000;
+  color: #fff;
+}
+
+header .logo img {
+  height: 50px;
+}
+
+header .navbar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+header .elementnavbar a img {
+  height: 32px;
+  width: 32px;
+}
+
+/* Contenido Principal */
+main {
+  display: flex;
+  width: auto;
+  background-color: #3a3a3a;
+  justify-content: center;
+  flex-direction: column;
+  padding: 2rem;
+  gap: 20px;
+}
+
+.matrix-input,
+.matrix-results {
+  display: flex;
+  width: auto;
+  height: auto;
+  background-color: #ffffff;
+  display: inline-block;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgb(0, 0, 0);
+}
+
+.matrix-input h2,
+.matrix-results h2 {
+  color: #000000;
+  margin-bottom: 1rem;
+}
+
+/* Contenedor de los de agregar/subir/limpiar botones */
+.matrix-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 10px;
+  align-items: center;
+}
+
+/*Subir Matriz*/
+.file-upload {
+  display: none;
+}
+
+.custom-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: fit-content;
+  margin-top: 10px;
+  padding: 10px 15px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.custom-button:hover {
+  background-color: #555;
+}
+
+.img-matrix-controls {
+  width: 24px;
+  height: 24px;
+}
+
+.matrix-controls button,
+.matrix-results button {
+  padding: 10px 15px;
+  margin-top: 10px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  text-align: right;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-align: center;
+}
+
+span {
+  margin-left: 10px;
+}
+
+.matrix-controls button:hover,
+.matrix-results button:hover {
+  background-color: #555;
+}
+
+/* Contenedor para ingresar la matriz*/
+#matrix-container {
+  width: auto;
+  padding: 10px;
+  /*border: 1px solid #ff0202;
+  box-sizing: border-box;*/
+}
+
+table {
+  border: 1px solid #3a3a3a;
+  border-top: none;
+  border-bottom: none;
+  box-sizing: border-box;
+}
+
+td {
+  background-color: #ffffff;
+}
+
+#matrix-container input {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff;
+  border: 1px solid #9d9d9d79;
+  min-width: 80px;
+  box-sizing: border-box;
+  font-size: 1.2em;
+  padding: 5px; /* Añadir espacio interno para mejorar la interacción */
+  text-align: center;
+  white-space: nowrap; /* Evita que el texto se envuelva en una nueva línea */
+}
+
+/* Resultados */
+#results-container {
+  width: auto;
+  padding: 1rem;
+  background-color: #e9f5ff;
+  border-radius: 5px;
+  min-height: 100px;
+  margin-bottom: 1rem;
+}
+
+/* Pie de página */
+footer {
+  width: auto;
+  text-align: center;
+  padding: 1rem;
+  background-color: #000000;
+  color: #fff;
+}
+
+/* Ajuste de botones y secciones en pantallas pequeñas */
+@media (max-width: 768px) {
+  main {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .matrix-input,
+  .matrix-results {
+    width: auto;
+  }
+
+  .navbar .menu {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  header .navbar .menu button {
+    width: auto;
+  }
+}
+
+/* Ajustes adicionales para pantallas muy pequeñas */
+@media (max-width: 576px) {
+  header,
+  footer {
+    text-align: center;
+  }
+
+  .matrix-controls button,
+  .matrix-controls input {
+    width: auto;
+  }
+
+  .navbar .menu button {
+    width: auto;
+    margin-bottom: 5px;
+  }
+}

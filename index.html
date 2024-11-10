@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inicio- MatrixCalc</title>
+    <link rel="stylesheet" href="frontend/src/styles/index.css" />
+    <script></script>
+  </head>
+  <body>
+    <header>
+      <section class="logo">
+        <a href="index.html">
+          <img src="/frontend/src/assets/svg/logoW.svg" alt="MatrixCalc-Logo" />
+        </a>
+      </section>
+    </header>
+    <main>
+      <section class="container-menu">
+        <h2>Seleccione una Operación</h2>
+        <div class="menu">
+          <button onclick="performOperation('gauss-jordan')">
+            <a href="/frontend/src/pages/calculadora.html">
+              Algoritmo Gauss-Jordan
+            </a>
+          </button>
+          <button onclick="performOperation('sel')">
+            <a href="/frontend/src/pages/calculadora.html">
+              Sistema de Ecuaciones Líneales
+            </a>
+          </button>
+          <button onclick="performOperation('inversa')">
+            <a href="">Matriz Inversa</a>
+          </button>
+          <button onclick="performOperation('determinante')">
+            <a href="/frontend/src/pages/calculadora.html"> Determinante </a>
+          </button>
+          <button onclick="performOperation('gauss-jordan-humano')">
+            <a href="/frontend/src/pages/calculadora.html">
+              Gauss-Jordan Humanizado
+            </a>
+          </button>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <p>Derechos reservados MatrixCalc©</p>
+    </footer>
+    <script src="/frontend/src/scripts/calculadora.js" defer></script>
+  </body>
+</html>
