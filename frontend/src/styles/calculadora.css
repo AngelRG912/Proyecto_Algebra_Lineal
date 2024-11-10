@@ -53,13 +53,61 @@ main {
   gap: 20px;
 }
 
+/* Contenedor de las notificaciones */
+#notification-container {
+  position: fixed;
+  bottom: 20px; /* Ajusta la distancia desde el fondo */
+  right: 20px; /* Ajusta la distancia desde el borde derecho */
+  z-index: 9999; /* Asegura que se muestren encima de otros elementos */
+  display: flex;
+  flex-direction: column; /* Apilar las notificaciones verticalmente */
+  gap: 10px; /* Espacio entre las notificaciones */
+  max-width: 300px; /* Opcional: Controla el ancho máximo */
+}
+
+/* Estilo para cada notificación */
+.notification {
+  background-color: #4caf50; /* Verde para éxito */
+  color: white;
+  padding: 15px;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out; /* Desvanecimiento de la notificación */
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Para colocar texto y botón de cerrar si es necesario */
+  min-width: 250px; /* Tamaño mínimo de la notificación */
+}
+
+.notification.error {
+  background-color: #f44336; /* Rojo para errores */
+}
+
+.notification pre {
+  font-family: "Courier New", Courier, monospace;
+  margin: 0;
+}
+
+.notification .close-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
 .matrix-input,
 .matrix-results {
   display: flex;
-  width: auto;
+  flex-direction: column;
+  width: 100%;
   height: auto;
   background-color: #ffffff;
-  display: inline-block;
   padding: 1rem;
   border-radius: 8px;
   box-shadow: 0 0 10px rgb(0, 0, 0);
@@ -137,13 +185,28 @@ span {
 
 /* Contenedor para ingresar la matriz*/
 #matrix-container {
+  display: flex;
   width: auto;
+  justify-content: center;
+  align-items: center;
   padding: 10px;
-  /*border: 1px solid #ff0202;
-  box-sizing: border-box;*/
+  overflow-x: auto;
+}
+
+#augmented-matrix-container {
+  display: flex;
+  width: auto;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  overflow-x: auto;
 }
 
 table {
+  display: flex;
+  width: auto;
+  justify-content: flex-start;
+  border-collapse: collapse;
   border: 1px solid #3a3a3a;
   border-top: none;
   border-bottom: none;
@@ -168,14 +231,35 @@ td {
   white-space: nowrap; /* Evita que el texto se envuelva en una nueva línea */
 }
 
+#calculate {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
 /* Resultados */
 #results-container {
+  display: flex;
   width: auto;
   padding: 1rem;
   background-color: #e9f5ff;
   border-radius: 5px;
   min-height: 100px;
   margin-bottom: 1rem;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  overflow-x: auto;
+}
+
+.result-cell {
+  width: 100px;
+  padding: 8px;
+  margin: 5px;
+  text-align: center;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
 }
 
 /* Pie de página */

@@ -73,11 +73,14 @@
             <span>Resetear Matriz</span>
           </button>
         </div>
-        <div class="border-matrix" id="matrix-container">
+        <div id="matrix-container">
           <!--Aquí es el container de la table y los inputs-->
         </div>
-        <div class="matrix-controls" view="flex">
-          <button class="matrix-button">
+        <div id="augmented-matrix-container">
+          <!-- Aquí se mostrará la matriz aumentada durante el proceso de Gauss-Jordan -->
+        </div>
+        <div class="matrix-controls" id="calculate" view="flex">
+          <button onclick="calculateMatrix()" class="matrix-button">
             <img
               class="img-matrix-controls"
               src="/frontend/src/assets/svg/calcular-matriz.svg"
@@ -89,22 +92,34 @@
       </section>
       <section class="matrix-results">
         <h2>Resultados</h2>
-        <div id="results-container"></div>
-        <button onclick="copyResult()">
-          <img
-            class="img-matrix-controls"
-            src="/frontend/src/assets/svg/copiar-resultado.svg"
-            alt="Copiar Resultado"
-          />
-          <span>Copiar Resultado</span>
-        </button>
+        <div id="results-container">
+          <!--Aquí es el container de Resultados Dínamicos-->
+        </div>
+        <div class="matrix-controls">
+          <button onclick="copyResult()">
+            <img
+              class="img-matrix-controls"
+              src="/frontend/src/assets/svg/copiar-resultado.svg"
+              alt="Copiar Resultado"
+            />
+            <span>Copiar Resultado</span>
+          </button>
+          <button onclick="deleteResult()">
+            <img
+              class="img-matrix-controls"
+              src="/frontend/src/assets/svg/borrar-resultado-blanco.svg"
+              alt="Borrar Resultado"
+            />
+            <span>Borrar Resultado</span>
+          </button>
+        </div>
       </section>
     </main>
+    <!-- Contenedor para las notificaciones -->
+    <div id="notification-container"></div>
     <footer>
       <p>Derechos reservados MatrixCalc©</p>
     </footer>
-    <script src="/frontend/src/scripts/calculadora.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/10.1.0/math.min.js"></script>
     <script>
       // Captura los parámetros 'titulo' y 'operation' de la URL
       const params = new URLSearchParams(window.location.search);
@@ -122,5 +137,7 @@
       // Inserta el <h2> en el contenedor
       nameOperationContainer.appendChild(h2Element);
     </script>
+    <script src="/frontend/src/scripts/calculadora.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/10.1.0/math.min.js"></script>
   </body>
 </html>

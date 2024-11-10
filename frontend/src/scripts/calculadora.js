@@ -34,6 +34,7 @@ function createMatrix() {
           matrix[rowIndex][colIndex] = parsedValue;
         } catch (error) {
           console.warn("Entrada no válida. Se ignorará.");
+          matrix[rowIndex][colIndex] = 0; // Se asigna 0 si el valor no es válido
         }
       });
 
@@ -45,6 +46,7 @@ function createMatrix() {
 
   table.appendChild(tbody);
   matrixContainer.appendChild(table);
+
   switch (titulo) {
     case "Algoritmo Gauss-Jordan":
       break;
@@ -60,9 +62,10 @@ function createMatrix() {
       break;
   }
   table.style.borderRadius = borderStyle;
+  table.style.overflow = "auto";
 }
 
-// Función para ajustar el tamaño de la matriz según el número de filas y columnas ingresados
+// Ajustar el tamaño de la matriz
 function adjustMatrix() {
   const numRows = parseInt(document.getElementById("numRows").value);
   const numCols = parseInt(document.getElementById("numCols").value);
@@ -99,6 +102,7 @@ function addColumn() {
 function resetMatrix() {
   matrix = [];
   addRow();
+  deleteResult();
   createMatrix();
 }
 
@@ -108,45 +112,298 @@ function clearMatrix() {
   createMatrix(); // Actualizar la visualización de la matriz
 }
 
-// Inicializar con una fila
-addRow();
+// Función para resolver con Gauss-Jordan
+function gaussJordan(matrix) {
+  const numRows = matrix.length;
+  const numCols = matrix[0].length;
 
-// Función para leer archivo de texto y cargarlo en la matriz
-// Función para leer archivo de texto y cargarlo en la matriz
-document
-  .getElementById("fileInput")
-  .addEventListener("change", function (event) {
-    const file = event.target.files[0];
-    if (!file) return;
+  // Hacer una copia de la matriz para no modificar la original
+  let augmentedMatrix = matrix.map((row) => [...row]);
 
-    if (!file.name.endsWith(".txt")) {
-      alert("Por favor, carga un archivo de texto (.txt).");
-      return;
+  // Aplicar el algoritmo de Gauss-Jordan
+  for (let i = 0; i < numRows; i++) {
+    // Encuentra el pivote (el valor más grande en la columna actual)
+    let maxRow = i;
+    for (let j = i + 1; j < numRows; j++) {
+      if (
+        Math.abs(augmentedMatrix[j][i]) > Math.abs(augmentedMatrix[maxRow][i])
+      ) {
+        maxRow = j;
+      }
     }
 
-    const reader = new FileReader();
+    // Si el pivote es 0, la matriz es singular
+    if (augmentedMatrix[maxRow][i] === 0) {
+      showNotification(
+        "La matriz es singular y no tiene solución única.",
+        "error"
+      );
+      return augmentedMatrix; // No tiene solución única o tiene soluciones infinitas
+    }
 
-    reader.onload = function (e) {
-      const contenido = e.target.result;
+    // Intercambiar la fila actual con la fila del pivote
+    if (maxRow !== i) {
+      [augmentedMatrix[i], augmentedMatrix[maxRow]] = [
+        augmentedMatrix[maxRow],
+        augmentedMatrix[i],
+      ];
+    }
 
-      matrix = contenido
-        .trim()
-        .split("\n")
-        .map((line) => line.split(",").map(Number));
+    // Normalizar el pivote
+    const pivot = augmentedMatrix[i][i];
+    for (let j = 0; j < numCols; j++) {
+      augmentedMatrix[i][j] /= pivot;
+    }
 
-      createMatrix();
+    // Hacer ceros en todas las posiciones de la columna i
+    for (let k = 0; k < numRows; k++) {
+      if (k !== i) {
+        const factor = augmentedMatrix[k][i];
+        for (let j = 0; j < numCols; j++) {
+          augmentedMatrix[k][j] -= factor * augmentedMatrix[i][j];
+        }
+      }
+    }
+  }
 
-      // Resetear el input de archivo después de leer el archivo
-      document.getElementById("fileInput").value = "";
-    };
-
-    reader.readAsText(file);
-  });
-
-function copyResult() {
-  const resultContainer = document.getElementById("results-container");
-  const text = resultContainer.innerText;
-  navigator.clipboard.writeText(text).then(() => {
-    alert("Resultado copiado al portapapeles");
-  });
+  // Notificar que el algoritmo ha terminado
+  showNotification(
+    "El algoritmo Gauss-Jordan se completó exitosamente.",
+    augmentedMatrix,
+    "success"
+  );
+  return augmentedMatrix;
 }
+
+// Función para calcular el determinante
+function calculateDeterminant(matrix) {
+  return math.det(matrix);
+}
+
+// Función para calcular la inversa
+function calculateInverse(matrix) {
+  return math.inv(matrix);
+}
+
+// Función para calcular y mostrar el resultado
+function calculateMatrix() {
+  const params = new URLSearchParams(window.location.search);
+  const titulo = params.get("titulo");
+  const resultsContainer = document.getElementById("results-container");
+  resultsContainer.innerHTML = "";
+
+  let result;
+  try {
+    switch (titulo) {
+      case "Algoritmo Gauss-Jordan":
+        result = gaussJordan([...matrix]);
+        displayResult(result);
+        showNotification("Algoritmo Gauss-Jordan completado", result); // Notificación de éxito
+        break;
+      case "Determinante":
+        result = calculateDeterminant(matrix);
+        resultsContainer.textContent = `Determinante: ${result.toFixed(2)}`;
+        showNotification(`Determinante calculado: ${result.toFixed(2)}`, null); // Notificación de éxito
+        break;
+      case "Matriz Inversa":
+        result = calculateInverse(matrix);
+        displayResult(result);
+        showNotification("Matriz inversa calculada", result); // Notificación de éxito
+        break;
+      default:
+        resultsContainer.textContent = "Seleccione una operación válida.";
+        showNotification("Operación no válida", null); // Notificación de error
+    }
+  } catch (error) {
+    resultsContainer.textContent = "Error al calcular. Verifique la matriz.";
+    showNotification("Error en el cálculo. Verifique la matriz.", null); // Notificación de error
+  }
+}
+
+// Función para mostrar resultados en formato tabla, aplicando estilos de los inputs de la matriz
+function displayResult(resultMatrix) {
+  const resultsContainer = document.getElementById("results-container");
+
+  // Crear la tabla con estilos similares a los inputs de la matriz
+  const table = document.createElement("table");
+  const tbody = document.createElement("tbody");
+
+  resultMatrix.forEach((row) => {
+    const tr = document.createElement("tr");
+    row.forEach((cell) => {
+      const td = document.createElement("td");
+
+      // Aplicar estilos para que coincidan con los inputs
+      td.textContent = cell.toFixed(2);
+      td.style.width = "100px";
+      td.style.padding = "8px";
+      td.style.margin = "5px";
+      td.style.textAlign = "center";
+      td.style.border = "1px solid #ccc"; // Bordes similares a los inputs
+      td.style.backgroundColor = "#f9f9f9"; // Color de fondo similar al input
+      td.textContent = cell.toFixed(2); // Podrías aumentar los decimales si es necesario
+
+      tr.appendChild(td);
+    });
+    tbody.appendChild(tr);
+  });
+
+  table.appendChild(tbody);
+  resultsContainer.appendChild(table);
+}
+
+// Función para leer el archivo .txt y convertirlo a una matriz separada por comas
+function readFileAndUpdateMatrix(event) {
+  const file = event.target.files[0]; // Obtener el archivo seleccionado
+  if (!file) return; // Si no se selecciona archivo, salir
+
+  const reader = new FileReader();
+  reader.onload = function (e) {
+    const content = e.target.result; // Obtener el contenido del archivo
+    const rows = content.trim().split("\n"); // Dividir el contenido en filas
+    matrix = rows.map((row) => {
+      // Para cada fila, dividir por comas
+      return row
+        .trim()
+        .split(",")
+        .map((cell) => {
+          // Convertir cada valor a número
+          const parsedValue = parseFloat(cell);
+          return isNaN(parsedValue) ? 0 : parsedValue; // Si no es un número, colocar 0
+        });
+    });
+
+    // Mostrar la matriz antes de la actualización con una notificación
+    showNotification("Matriz leída desde el archivo", matrix);
+
+    createMatrix(); // Volver a renderizar la matriz
+  };
+
+  reader.onerror = function (error) {
+    console.error("Error al leer el archivo", error);
+  };
+
+  reader.readAsText(file); // Leer el archivo como texto
+}
+
+function showNotification(message, resultMatrix = null, type = "success") {
+  const notificationContainer = document.getElementById(
+    "notification-container"
+  );
+
+  // Crear el div para la notificación
+  const notification = document.createElement("div");
+  notification.classList.add("notification");
+
+  // Aplica el tipo de notificación (error o éxito)
+  if (type === "error") {
+    notification.classList.add("error");
+  }
+
+  // Si hay una matriz de resultados, mostrarla en la notificación
+  if (resultMatrix) {
+    const result = resultMatrix.map((row) => row.join(", ")).join("\n");
+    notification.innerHTML = `<strong>${message}</strong><pre>${result}</pre>`;
+  } else {
+    notification.textContent = message;
+  }
+
+  // Agregar la notificación al contenedor
+  notificationContainer.appendChild(notification);
+
+  // Eliminar la notificación después de 5 segundos
+  setTimeout(() => {
+    notification.style.opacity = 0;
+    setTimeout(() => notification.remove(), 500); // Eliminarla después de que se desvanezca
+  }, 5000); // La notificación durará 5 segundos
+}
+
+// Agregar el event listener para manejar la carga de archivo
+document
+  .getElementById("fileInput")
+  .addEventListener("change", readFileAndUpdateMatrix);
+
+// Función para mostrar la notificación
+function showNotification(message, type = "success") {
+  // Crear un div para la notificación
+  const notification = document.createElement("div");
+  notification.classList.add("notification", type);
+
+  // Agregar el mensaje
+  notification.textContent = message;
+
+  // Crear el botón de cierre
+  const closeBtn = document.createElement("button");
+  closeBtn.textContent = "×";
+  closeBtn.classList.add("close-btn");
+  closeBtn.onclick = () => {
+    notification.style.opacity = 0; // Desvanecer la notificación
+    setTimeout(() => notification.remove(), 500); // Eliminarla después de 500ms
+  };
+
+  // Agregar el botón de cierre al div de la notificación
+  notification.appendChild(closeBtn);
+
+  // Agregar la notificación al contenedor de notificaciones
+  const container = document.getElementById("notification-container");
+  container.appendChild(notification);
+
+  // Hacer que la notificación se desvanezca después de 3 segundos
+  setTimeout(() => {
+    notification.style.opacity = 0;
+    setTimeout(() => notification.remove(), 500); // Eliminarla después de desvanecerse
+  }, 3000); // Duración de la notificación antes de desaparecer
+}
+
+// Función para copiar al portapapeles
+function copyResult() {
+  const resultText = document
+    .getElementById("results-container")
+    .textContent.trim();
+  if (resultText) {
+    // Copiar al portapapeles
+    navigator.clipboard.writeText(resultText).then(
+      () => {
+        // Mostrar notificación de éxito
+        showNotification("Resultado copiado al portapapeles!", "success");
+      },
+      (err) => {
+        // Mostrar notificación de error
+        showNotification("Error al copiar el resultado.", "error");
+        console.error("Error al copiar al portapapeles: ", err);
+      }
+    );
+  } else {
+    // Mostrar notificación de error si no hay contenido para copiar
+    showNotification("No hay resultados para copiar.", "error");
+  }
+}
+
+// Función que borra el resultado en el contenedor
+function deleteResult() {
+  // Obtener el contenedor de resultados
+  const resultsContainer = document.getElementById("results-container");
+
+  // Verificar si hay contenido en el contenedor
+  if (resultsContainer) {
+    // Limpiar el contenido del contenedor de resultados
+    resultsContainer.innerHTML = "";
+  }
+}
+
+// Función para borrar resultados
+function deleteResult() {
+  // Obtener el contenedor de resultados
+  const resultsContainer = document.getElementById("results-container");
+
+  // Limpiar los resultados si existen
+  if (resultsContainer) {
+    resultsContainer.innerHTML = "";
+    showNotification("Resultado borrado correctamente.", "success");
+  } else {
+    showNotification("No hay resultados para borrar.", "error");
+  }
+}
+
+// Inicializar con una fila
+addRow();
