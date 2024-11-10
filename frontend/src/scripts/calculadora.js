@@ -177,11 +177,43 @@ function gaussJordan(matrix) {
 
 // Función para calcular el determinante
 function calculateDeterminant(matrix) {
-  return math.det(matrix);
+  // Verificar si la matriz es cuadrada
+  if (matrix.length === matrix[0].length) {
+    // Calcular el determinante usando math.js
+    return math.det(matrix);
+  }
+}
+
+// Función para generar la matriz identidad
+function createIdentityMatrix(size) {
+  const identityMatrix = [];
+  for (let i = 0; i < size; i++) {
+    const row = Array(size).fill(0);
+    row[i] = 1;
+    identityMatrix.push(row);
+  }
+  return identityMatrix;
 }
 
 // Función para calcular la inversa
 function calculateInverse(matrix) {
+  if (matrix.length !== matrix[0].length) {
+    throw new Error("La matriz no es cuadrada");
+  }
+
+  // Verificar el determinante de la matriz
+  const determinant = calculateDeterminant(matrix);
+  if (determinant === 0) {
+    throw new Error("La matriz es singular y no tiene inversa.");
+  }
+
+  // Crear la matriz identidad para mostrarla
+  const identityMatrix = createIdentityMatrix(matrix.length);
+
+  // Mostrar la matriz identidad antes de la inversa
+  displayResult(identityMatrix, "Matriz Identidad");
+
+  // Calcular la inversa usando math.js
   return math.inv(matrix);
 }
 
@@ -196,31 +228,118 @@ function calculateMatrix() {
   try {
     switch (titulo) {
       case "Algoritmo Gauss-Jordan":
-        result = gaussJordan([...matrix]);
-        displayResult(result);
-        showNotification("Algoritmo Gauss-Jordan completado", result); // Notificación de éxito
+        try {
+          result = gaussJordan([...matrix]);
+          displayResult(result);
+          showNotification("Algoritmo Gauss-Jordan completado", result); // Notificación de éxito
+        } catch (error) {
+          resultsContainer.textContent = "Error en el Algoritmo Gauss-Jordan.";
+          showNotification("Error en el Algoritmo Gauss-Jordan", null); // Notificación de error
+        }
         break;
+
+      case "Sistema de Ecuaciones Líneales":
+        try {
+        } catch (error) {
+          resultsContainer.textContent = "Error en el Algoritmo Gauss-Jordan.";
+          showNotification("Error en el Algoritmo Gauss-Jordan", null); // Notificación de error
+        }
+        break;
+
       case "Determinante":
-        result = calculateDeterminant(matrix);
-        resultsContainer.textContent = `Determinante: ${result.toFixed(2)}`;
-        showNotification(`Determinante calculado: ${result.toFixed(2)}`, null); // Notificación de éxito
+        try {
+          // Verificar si la matriz es cuadrada antes de calcular el determinante
+          if (matrix.length !== matrix[0].length) {
+            throw new Error("La matriz no es cuadrada");
+          }
+          result = calculateDeterminant(matrix);
+          resultsContainer.textContent = `Determinante: ${result.toFixed(2)}`;
+          showNotification(
+            `Determinante calculado: ${result.toFixed(2)}`,
+            null
+          ); // Notificación de éxito
+        } catch (error) {
+          if (error.message === "La matriz no es cuadrada") {
+            resultsContainer.textContent =
+              "La matriz no es cuadrada. No se puede calcular el determinante.";
+            showNotification("La matriz no es cuadrada", null); // Notificación de error
+          } else {
+            resultsContainer.textContent =
+              "Error en el cálculo del determinante.";
+            showNotification("Error en el cálculo del determinante", null); // Notificación de error
+          }
+        }
         break;
+
       case "Matriz Inversa":
-        result = calculateInverse(matrix);
-        displayResult(result);
-        showNotification("Matriz inversa calculada", result); // Notificación de éxito
+        try {
+          result = calculateInverse(matrix);
+          displayResult(result, "Matriz Inversa Calculada"); // Mostrar la inversa
+          showNotification("Matriz inversa calculada", result); // Notificación de éxito
+        } catch (error) {
+          if (error.message === "La matriz es singular y no tiene inversa.") {
+            resultsContainer.textContent =
+              "La matriz es singular y no tiene inversa.";
+            showNotification("La matriz no tiene inversa", null); // Notificación de error
+          } else {
+            resultsContainer.textContent =
+              "Error en el cálculo de la matriz inversa.";
+            showNotification("Error en el cálculo de la matriz inversa", null); // Notificación de error
+          }
+        }
         break;
+
       default:
         resultsContainer.textContent = "Seleccione una operación válida.";
         showNotification("Operación no válida", null); // Notificación de error
     }
   } catch (error) {
-    resultsContainer.textContent = "Error al calcular. Verifique la matriz.";
-    showNotification("Error en el cálculo. Verifique la matriz.", null); // Notificación de error
+    // General error handler
+    resultsContainer.textContent = "Error en la operación solicitada.";
+    showNotification("Error en la operación", null); // Notificación de error
   }
 }
 
-// Función para mostrar resultados en formato tabla, aplicando estilos de los inputs de la matriz
+// Función para mostrar resultados en formato tabla
+function displayResult(resultMatrix, title = "Resultado") {
+  const resultsContainer = document.getElementById("results-container");
+
+  // Crear la tabla para mostrar el resultado
+  const table = document.createElement("table");
+  const tbody = document.createElement("tbody");
+
+  // Título para la matriz
+  const titleRow = document.createElement("tr");
+  const titleCell = document.createElement("td");
+  titleCell.colSpan = resultMatrix[0].length;
+  titleCell.style.textAlign = "center";
+  titleCell.style.fontWeight = "bold";
+  titleCell.textContent = title;
+  titleRow.appendChild(titleCell);
+  tbody.appendChild(titleRow);
+
+  // Rellenar la tabla con los valores de la matriz
+  resultMatrix.forEach((row) => {
+    const tr = document.createElement("tr");
+    row.forEach((cell) => {
+      const td = document.createElement("td");
+      td.textContent = cell.toFixed(2); // Mostramos los valores con 2 decimales
+      td.style.width = "100px";
+      td.style.padding = "8px";
+      td.style.margin = "5px";
+      td.style.textAlign = "center";
+      td.style.border = "1px solid #ccc"; // Bordes similares a los inputs
+      td.style.backgroundColor = "#f9f9f9"; // Color de fondo similar al input
+      tr.appendChild(td);
+    });
+    tbody.appendChild(tr);
+  });
+
+  table.appendChild(tbody);
+  resultsContainer.appendChild(table);
+}
+
+/* Función para mostrar resultados en formato tabla, aplicando estilos de los inputs de la matriz
 function displayResult(resultMatrix) {
   const resultsContainer = document.getElementById("results-container");
 
@@ -250,7 +369,7 @@ function displayResult(resultMatrix) {
 
   table.appendChild(tbody);
   resultsContainer.appendChild(table);
-}
+}*/
 
 // Función para leer el archivo .txt y convertirlo a una matriz separada por comas
 function readFileAndUpdateMatrix(event) {
@@ -277,6 +396,7 @@ function readFileAndUpdateMatrix(event) {
     showNotification("Matriz leída desde el archivo", matrix);
 
     createMatrix(); // Volver a renderizar la matriz
+    deleteResult();
   };
 
   reader.onerror = function (error) {

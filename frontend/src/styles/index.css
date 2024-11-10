@@ -32,6 +32,31 @@ header .logo img {
   max-width: 100%;
 }
 
+.header {
+  display: flex;
+  justify-content: center; /* Centra los elementos hijos horizontalmente */
+  align-items: center; /* Alinea los elementos hijos verticalmente */
+  position: relative; /* Para poder manejar el logo y el título con precisión */
+  height: 100px; /* Ajusta la altura del header según lo necesites */
+}
+
+/* Estilos para el logo */
+.logo {
+  position: absolute;
+  left: 20px; /* Ajusta la distancia desde el borde izquierdo */
+}
+
+/* Estilos para el título */
+.titulo {
+  text-align: center; /* Centra el texto dentro del contenedor */
+  flex-grow: 1; /* Permite que el título ocupe todo el espacio disponible */
+}
+
+/* Si necesitas que el título esté centrado sin que afecte a los otros elementos */
+#titulo h2 {
+  margin: 0;
+}
+
 /* Contenido Principal */
 main {
   display: flex;
