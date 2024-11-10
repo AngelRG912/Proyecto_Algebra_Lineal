@@ -19,26 +19,20 @@
       <section class="container-menu">
         <h2>Seleccione una Operación</h2>
         <div class="menu">
-          <button onclick="performOperation('gauss-jordan')">
-            <a href="/frontend/src/pages/calculadora.html">
-              Algoritmo Gauss-Jordan
-            </a>
+          <button onclick="handleOperation('gauss-jordan', event)">
+            Algoritmo Gauss-Jordan
           </button>
-          <button onclick="performOperation('sel')">
-            <a href="/frontend/src/pages/calculadora.html">
-              Sistema de Ecuaciones Líneales
-            </a>
+          <button onclick="handleOperation('sel', event)">
+            Sistema de Ecuaciones Líneales
           </button>
-          <button onclick="performOperation('inversa')">
-            <a href="frontend/src/pages/calculadora.html">Matriz Inversa</a>
+          <button onclick="handleOperation('inversa', event)">
+            Matriz Inversa
           </button>
-          <button onclick="performOperation('determinante')">
-            <a href="/frontend/src/pages/calculadora.html"> Determinante </a>
+          <button onclick="handleOperation('determinante', event)">
+            Determinante
           </button>
-          <button onclick="performOperation('gauss-jordan-humano')">
-            <a href="/frontend/src/pages/calculadora.html">
-              Gauss-Jordan Humanizado
-            </a>
+          <button onclick="handleOperation('gauss-jordan-humano', event)">
+            Gauss-Jordan Humanizado
           </button>
         </div>
       </section>
@@ -47,5 +41,6 @@
       <p>Derechos reservados MatrixCalc©</p>
     </footer>
     <script src="/frontend/src/scripts/calculadora.js" defer></script>
+    <script src="/frontend/src/scripts/switchOperation.js" defer></script>
   </body>
 </html>

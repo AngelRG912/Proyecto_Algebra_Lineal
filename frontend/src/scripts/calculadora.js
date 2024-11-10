@@ -1,22 +1,37 @@
 let matrix = []; // Inicializar la matriz como un array vacío
 let styleborder = "5px";
 
-function performOperation(operation) {
+function handleOperation(operation, event) {
+  // Prevenir que el enlace sea seguido inmediatamente
+  event.preventDefault();
+
+  // Llamar a la función para cambiar el título dinámicamente
+  switchOperation(operation);
+
+  // Redirigir después de ejecutar la operación
+  setTimeout(() => {
+    // Cambia esta URL a la página a la que quieras redirigir
+    window.location.href = "/frontend/src/pages/calculadora.html";
+  }, 100); // Espera 100 ms para asegurar que la función haya sido llamada
+}
+
+function switchOperation(operation) {
+  // Switch para manejar diferentes operaciones
   switch (operation) {
     case "gauss-jordan":
+      // Implementar la lógica de Gauss-Jordan aquí
       break;
     case "sel":
-      // Resuelve el sistema de ecuaciones lineales aquí
+      // Implementar la lógica de SEL aquí
       break;
     case "inversa":
-      // Calcula la inversa de la matriz aquí
+      // Implementar la lógica para calcular la inversa de la matriz aquí
       break;
     case "determinante":
-      styleborder = "";
-      // Calcula el determinante aquí
+      // Implementar la lógica para calcular el determinante aquí
       break;
     case "gauss-jordan-humano":
-      // Implementa el Gauss-Jordan con pasos detallados aquí
+      // Implementar el Gauss-Jordan con pasos detallados aquí
       break;
     default:
       console.warn("Operación no reconocida");
