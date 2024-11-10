@@ -1,61 +1,65 @@
+/* Reset general */
 * {
   margin: 0;
   padding: 0;
-  width: auto;
+  box-sizing: border-box;
 }
 
 /* General */
 body {
-  width: auto;
-  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 100vh;
   font-family: Arial, sans-serif;
   background-color: #000000;
-  justify-content: center;
-  align-items: center;
 }
 
 /* Encabezado */
 header {
   display: flex;
-  width: auto;
-  height: 10%;
-  flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
   padding: 1rem;
   background-color: #000000;
   color: #fff;
 }
 
 header .logo img {
-  height: 50px;
+  height: 5rem; /* Usando rem para una escala más flexible */
+  max-width: 100%;
 }
 
 /* Contenido Principal */
 main {
   display: flex;
-  width: auto;
+  justify-content: center;
   align-items: center;
   background-color: #3a3a3a;
-  justify-content: center;
-  flex-direction: column;
-  padding: 8%;
+  flex-grow: 1; /* Permite que el main ocupe todo el espacio disponible */
+  padding: 5%;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .container-menu {
   display: flex;
   flex-direction: column;
-  width: 350px;
+  width: 100%;
+  max-width: 350px;
   background-color: #ffffff;
   align-items: center;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 20px;
+  box-shadow: 0 4px 8px rgba(125, 124, 124, 0.83);
+  padding: 1rem;
 }
 
 .container-menu h2 {
+  margin: 5px;
   color: #000000;
-  margin-bottom: 1rem;
+  font-size: 1.5rem;
 }
 
 .menu {
@@ -63,24 +67,23 @@ main {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 70%;
-  width: fit-content;
+  width: 100%;
 }
 
 .menu button {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: fit-content;
   width: 100%;
-  margin-top: 10px;
-  padding: 10px 15px;
+  margin: 5px;
   background-color: #333;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   font-size: 1rem;
+  transition: background-color 0.3s ease;
 }
+
 .menu button:hover {
   background-color: #555;
 }
@@ -89,32 +92,72 @@ a {
   text-decoration: none;
   color: #fff;
 }
-/*Pie de página*/
+
+/* Pie de página */
 footer {
-  width: auto;
+  width: 100%;
   background-color: #000000;
   color: #fff;
   text-align: center;
-  align-items: center;
   padding: 1rem;
 }
 
-/* Ajuste de botones y secciones en pantallas pequeñas */
-@media (max-width: 768px) {
+/* Media Queries */
+
+/* Para pantallas más grandes */
+@media (min-width: 768px) {
   main {
+    flex-direction: row;
+    padding: 4%;
+  }
+
+  .container-menu {
+    max-width: 400px;
+  }
+
+  .menu button {
+    padding: 15px 20px;
+  }
+}
+
+/* Para pantallas medianas y pequeñas */
+@media (max-width: 768px) {
+  body {
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  header {
     flex-direction: column;
     align-items: center;
   }
 
-  header {
-    width: auto;
+  .container-menu {
+    width: 90%; /* 90% del ancho en dispositivos pequeños */
+    padding: 1rem;
+  }
+
+  .menu button {
+    padding: 12px 18px;
+    font-size: 1.1rem;
   }
 }
 
-/* Ajustes adicionales para pantallas muy pequeñas */
+/* Ajustes para pantallas muy pequeñas */
 @media (max-width: 576px) {
   header,
   footer {
     text-align: center;
+    padding: 0.5rem;
+  }
+
+  .menu button {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .container-menu {
+    width: 100%;
+    padding: 1rem;
   }
 }
