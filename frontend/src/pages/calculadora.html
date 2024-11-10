@@ -14,7 +14,9 @@
         </a>
       </section>
       <section>
-        <div id="name-operation"></div>
+        <div id="name-operation">
+          <!--Aquí es el container del titulo en el header-->
+        </div>
       </section>
       <section>
         <div class="elementnavbar">
@@ -71,7 +73,9 @@
             <span>Resetear Matriz</span>
           </button>
         </div>
-        <div class="border-matrix" id="matrix-container"></div>
+        <div class="border-matrix" id="matrix-container">
+          <!--Aquí es el container de la table y los inputs-->
+        </div>
         <div class="matrix-controls" view="flex">
           <button class="matrix-button">
             <img
@@ -101,5 +105,22 @@
     </footer>
     <script src="/frontend/src/scripts/calculadora.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/10.1.0/math.min.js"></script>
+    <script>
+      // Captura los parámetros 'titulo' y 'operation' de la URL
+      const params = new URLSearchParams(window.location.search);
+      const titulo = params.get("titulo");
+
+      // Obtiene el contenedor donde se insertará el <h2>
+      const nameOperationContainer = document.getElementById("name-operation");
+
+      // Crea el elemento <h2> y establece su contenido
+      const h2Element = document.createElement("h2");
+      h2Element.textContent = titulo
+        ? decodeURIComponent(titulo)
+        : "Título predeterminado";
+
+      // Inserta el <h2> en el contenedor
+      nameOperationContainer.appendChild(h2Element);
+    </script>
   </body>
 </html>

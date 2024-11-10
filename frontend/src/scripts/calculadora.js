@@ -1,51 +1,15 @@
 let matrix = []; // Inicializar la matriz como un array vacío
-let styleborder = "5px";
-
-function handleOperation(operation, event) {
-  // Prevenir que el enlace sea seguido inmediatamente
-  event.preventDefault();
-
-  // Llamar a la función para cambiar el título dinámicamente
-  switchOperation(operation);
-
-  // Redirigir después de ejecutar la operación
-  setTimeout(() => {
-    // Cambia esta URL a la página a la que quieras redirigir
-    window.location.href = "/frontend/src/pages/calculadora.html";
-  }, 100); // Espera 100 ms para asegurar que la función haya sido llamada
-}
-
-function switchOperation(operation) {
-  // Switch para manejar diferentes operaciones
-  switch (operation) {
-    case "gauss-jordan":
-      // Implementar la lógica de Gauss-Jordan aquí
-      break;
-    case "sel":
-      // Implementar la lógica de SEL aquí
-      break;
-    case "inversa":
-      // Implementar la lógica para calcular la inversa de la matriz aquí
-      break;
-    case "determinante":
-      // Implementar la lógica para calcular el determinante aquí
-      break;
-    case "gauss-jordan-humano":
-      // Implementar el Gauss-Jordan con pasos detallados aquí
-      break;
-    default:
-      console.warn("Operación no reconocida");
-  }
-}
 
 // Crear matriz visual en el contenedor HTML
 function createMatrix() {
+  const params = new URLSearchParams(window.location.search);
+  const titulo = params.get("titulo");
+  var borderStyle = "5px";
   const matrixContainer = document.getElementById("matrix-container");
   matrixContainer.innerHTML = ""; // Limpiar el contenedor
 
   // Crear una tabla para mejorar la visualización
   const table = document.createElement("table");
-  table.style.borderRadius = styleborder;
   const tbody = document.createElement("tbody");
 
   matrix.forEach((row, rowIndex) => {
@@ -81,6 +45,21 @@ function createMatrix() {
 
   table.appendChild(tbody);
   matrixContainer.appendChild(table);
+  switch (titulo) {
+    case "Algoritmo Gauss-Jordan":
+      break;
+    case "Sistema de Ecuaciones Líneales":
+      table.style.border = "none";
+      break;
+    case "Matriz Inversa":
+      break;
+    case "Determinante":
+      borderStyle = "0px";
+      break;
+    case "Gauss-Jordan-humanizado":
+      break;
+  }
+  table.style.borderRadius = borderStyle;
 }
 
 // Función para ajustar el tamaño de la matriz según el número de filas y columnas ingresados
