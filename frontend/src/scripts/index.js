@@ -84,6 +84,12 @@ function resetMatrix() {
   createMatrix();
 }
 
+// Función para limpiar la matriz
+function clearMatrix() {
+  matrix = matrix.map((row) => row.map(() => 0)); // Establecer todos los valores en 0
+  createMatrix(); // Actualizar la visualización de la matriz
+}
+
 // Inicializar con una fila
 addRow();
 
@@ -94,44 +100,25 @@ document
     const file = event.target.files[0];
     if (!file) return;
 
+    // Verificar que el archivo es de tipo .txt
+    if (!file.name.endsWith(".txt")) {
+      alert("Por favor, carga un archivo de texto (.txt).");
+      return;
+    } else {
+      alert("Por favor, carga un archivo de texto (.txt)");
+    }
+
     const reader = new FileReader();
 
-    if (file.name.endsWith(".txt")) {
-      reader.onload = function (e) {
-        const contenido = e.target.result;
-        matrix = contenido
-          .trim()
-          .split("\n")
-          .map((line) => line.split(",").map(Number));
-        createMatrix(); // Actualizar la vista de la matriz
-      };
-      reader.readAsText(file);
-    } else if (file.name.endsWith(".pdf")) {
-      reader.onload = async function () {
-        const typedarray = new Uint8Array(this.result);
-        const pdf = await pdfjsLib.getDocument(typedarray).promise;
-
-        let textoCompleto = "";
-        for (let i = 1; i <= pdf.numPages; i++) {
-          const page = await pdf.getPage(i);
-          const texto = await page.getTextContent();
-          texto.items.forEach((item) => {
-            textoCompleto += item.str + "\n";
-          });
-        }
-
-        matrix = textoCompleto
-          .trim()
-          .split("\n")
-          .map((line) => line.split(",").map(Number));
-        createMatrix(); // Actualizar la vista de la matriz
-      };
-      reader.readAsArrayBuffer(file);
-    } else {
-      alert(
-        "Por favor, carga un archivo de texto (.txt) o un archivo PDF (.pdf)."
-      );
-    }
+    reader.onload = function (e) {
+      const contenido = e.target.result;
+      matrix = contenido
+        .trim()
+        .split("\n")
+        .map((line) => line.split(",").map(Number));
+      createMatrix(); // Actualizar la vista de la matriz
+    };
+    reader.readAsText(file);
   });
 
 function performOperation(operation) {

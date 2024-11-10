@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MatrixCalc</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/10.1.0/math.min.js"></script>
     <link rel="stylesheet" href="/frontend/src/styles/index.css" />
   </head>
   <body>
@@ -40,6 +39,7 @@
     <main>
       <section class="matrix-input">
         <h2>Calculadora de Matrices</h2>
+        <p>Ingrese una matriz:</p>
         <div class="matrix-controls" view="flex">
           <button onclick="addRow()" class="matrix-button">
             <img
@@ -65,19 +65,22 @@
             />
             <span>Subir Matriz</span>
           </label>
-          <input
-            class="file-upload"
-            type="file"
-            id="fileInput"
-            accept=".txt, .pdf"
-          />
-          <button onclick="resetMatrix()" class="matrix-button">
+          <input class="file-upload" type="file" id="fileInput" accept=".txt" />
+          <button onclick="clearMatrix()" class="matrix-button">
             <img
               class="img-matrix-controls"
               src="/frontend/src/assets/svg/limpiar-matriz-blanco.svg"
               alt="Limpiar Matriz"
             />
             <span>Limpiar Matriz</span>
+          </button>
+          <button onclick="resetMatrix()" class="matrix-button">
+            <img
+              class="img-matrix-controls"
+              src="/frontend/src/assets/svg/resetear-matriz-blanco.svg"
+              alt="Resetear Matriz"
+            />
+            <span>Resetear Matriz</span>
           </button>
         </div>
 
@@ -87,7 +90,6 @@
         <h2>Resultados</h2>
         <div id="results-container"></div>
         <button onclick="copyResult()">Copiar Resultado</button>
-        <button onclick="exportToPDF()">Exportar como PDF</button>
       </section>
     </main>
     <footer>
