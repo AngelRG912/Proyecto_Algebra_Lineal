@@ -52,7 +52,7 @@ main {
   background-color: #ffffff;
   align-items: center;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(125, 124, 124, 0.83);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 1rem;
 }
 
