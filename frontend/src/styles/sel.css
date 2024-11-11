@@ -1,0 +1,223 @@
+/* Reset CSS */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* General */
+body {
+  font-family: Arial, sans-serif;
+  color: #303030;
+  background-color: #f4f4f9;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+/* Encabezado */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: #000000;
+  color: #fff;
+}
+
+header .logo img {
+  height: 50px;
+}
+
+header .navbar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+header .navbar .menu a {
+  background-color: #333;
+  color: #fff;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  text-decoration: none;
+}
+
+header .navbar .menu a:hover {
+  background-color: #555;
+}
+
+header .elementnavbar a img {
+  height: 32px;
+  width: 32px;
+}
+
+/* Contenido Principal */
+main {
+  background-color: #3a3a3a;
+  display: flex;
+  justify-content: space-around;
+  padding: 2rem;
+  gap: 20px;
+  flex-grow: 1;
+}
+
+.matrix-input,
+.matrix-results {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  flex: 1; /* Hacer que ambos contenedores se expandan */
+}
+
+.matrix-input h2,
+.matrix-results h2 {
+  color: #000000;
+  margin-bottom: 1rem;
+}
+
+.matrix-controls {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.matrix-controls button {
+  padding: 10px 15px;
+  margin-top: 10px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.matrix-controls button:hover {
+  background-color: #555;
+}
+
+/*#matrix-container input {
+
+}*/
+
+.input-matrix {
+  width: 80px;
+  padding: 10px;
+  text-align: center;
+  font-size: 1rem;
+  margin: 5px;
+}
+.inputs-container {
+  margin: 5px;
+  width: 15px;
+  text-align: center;
+  font-size: 2rem;
+  text-decoration: none;
+}
+
+/* Resultados */
+#results-container {
+  padding: 1rem;
+  background-color: #e9f5ff;
+  border-radius: 5px;
+  min-height: 100px;
+  margin-bottom: 1rem;
+}
+
+.matrix-results button {
+  padding: 10px 15px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.matrix-results button:hover {
+  background-color: #555;
+}
+
+/* Pie de página */
+footer {
+  text-align: center;
+  padding: 1rem;
+  background-color: #000000;
+  color: #fff;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+  main {
+    flex-direction: column;
+  }
+
+  header {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+.matrix {
+  display: inline-block;
+  vertical-align: top;
+}
+.matrix-row {
+  display: flex;
+}
+/* Contenedor envolvente para centrar la matriz */
+#matrix-container-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+/* Ajustes adicionales para los elementos de la matriz */
+#matrix-container {
+  display: grid;
+  grid-template-columns: repeat(
+    3,
+    80px
+  ); /* Ajusta la cuadrícula a las columnas necesarias */
+  gap: 10px;
+}
+
+.matrix-bracket {
+  font-size: 2.5rem; /* Tamaño del paréntesis */
+  font-weight: bold;
+}
+
+.input-container {
+  display: flex;
+  align-items: center;
+}
+
+.input-matrix {
+  width: 100%; /* Ajusta el ancho de los campos de entrada */
+}
+
+.equal-sign {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  padding: 2px; /* Ajuste del espacio horizontal */
+}
+
+#solution-container {
+  margin-top: 10px;
+}
+
+.solution-result {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-bottom: 5px;
+}

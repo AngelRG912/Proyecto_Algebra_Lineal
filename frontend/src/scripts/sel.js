@@ -8,7 +8,98 @@ function initializeMatrix3x3() {
     [0, 0, 0, 0],
     [0, 0, 0, 0],
   ];
+  createMatrix(); // Llamar a la función para crear y mostrar la matriz en el DOM
 }
+
+// Función para renderizar la matriz en el contenedor de HTML
+function createMatrix() {
+  const matrixContainer = document.getElementById("matrix-container");
+  matrixContainer.innerHTML = ""; // Limpiar el contenedor
+
+  // Crear un campo de input y etiqueta para cada elemento de la matriz
+  matrix.forEach((row, rowIndex) => {
+    row.forEach((value, colIndex) => {
+      // Crear contenedor para el input y la etiqueta
+      const inputContainer = document.createElement("div");
+      inputContainer.classList.add("input-container");
+
+      const input = document.createElement("input");
+      input.type = "number";
+      input.value = matrix[rowIndex][colIndex] || "";
+      input.classList.add("input-matrix");
+
+      // Actualizar el valor en la matriz cuando se cambie el valor del input
+      input.addEventListener("input", (e) => {
+        matrix[rowIndex][colIndex] = parseFloat(e.target.value);
+      });
+
+      // Crear la etiqueta "x1", "x2", etc., solo para las primeras tres columnas
+      const label = document.createElement("span");
+      if (colIndex < row.length - 1) {
+        label.innerHTML = `x<sub>${colIndex + 1}</sub>`;
+      }
+      label.classList.add("matrix-label");
+
+      // Agregar el input y la etiqueta al contenedor de input
+      inputContainer.appendChild(input);
+      inputContainer.appendChild(label);
+
+      // Agregar el contenedor al contenedor de la matriz
+      matrixContainer.appendChild(inputContainer);
+
+      // Agregar el símbolo de igual antes del último input de cada fila
+      if (colIndex === row.length - 2) {
+        const equalSign = document.createElement("span");
+        equalSign.innerHTML = "=";
+        equalSign.classList.add("equal-sign");
+        matrixContainer.appendChild(equalSign);
+      }
+    });
+  });
+
+  // Ajustar el estilo para mostrar los inputs en una cuadrícula 3x4
+  matrixContainer.style.display = "grid";
+  matrixContainer.style.gridTemplateColumns = `repeat(${
+    matrix[0].length + 1
+  }, 90px)`;
+}
+
+// Llamar a la función para inicializar y mostrar la matriz 3x4 al cargar la página
+document.addEventListener("DOMContentLoaded", initializeMatrix3x3);
+
+function addRow() {
+  const cols = matrix[0]?.length || 1;
+  const newRow = Array(cols).fill(0);
+  matrix.push(newRow);
+  createMatrix();
+}
+
+function addColumn() {
+  if (matrix.length === 0) {
+    matrix.push([0]);
+  } else {
+    matrix.forEach((row) => row.push(0));
+  }
+  createMatrix();
+}
+
+function resetMatrix() {
+  // Vaciar la matriz y volver a inicializarla como una matriz 3x4 de ceros
+  matrix = [
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+  ];
+
+  createMatrix(); // Renderizar la matriz en el DOM
+
+  // Limpiar el contenido de los resultados
+  const resultsContainer = document.getElementById("results-container");
+  resultsContainer.innerHTML = "";
+}
+
+// Inicializar la matriz al cargar la página
+window.onload = createMatrix;
 
 // Gauss-Jordan Functions (sin cambios en esta sección)
 function hacer_Uno(matriz, fila, col, m) {

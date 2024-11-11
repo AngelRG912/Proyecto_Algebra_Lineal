@@ -10,6 +10,11 @@
         // Cambiar a la página de calculadora con el parámetro 'titulo' en la URL
         window.location.href = `/frontend/src/pages/calculadora.html?titulo=${operation}`;
       }
+
+      function sel() {
+        // Cambiar a la página de calculadora con el parámetro 'titulo' en la URL
+        window.location.href = `/frontend/src/pages/sel.html`;
+      }
     </script>
   </head>
   <body>
@@ -34,7 +39,7 @@
           <button onclick="changePage('Algoritmo Gauss-Jordan')">
             Algoritmo Gauss-Jordan
           </button>
-          <button onclick="changePage('Sistema de Ecuaciones Líneales')">
+          <button onclick="sel('Sistema de Ecuaciones Líneales')">
             Sistema de Ecuaciones Líneales
           </button>
           <button onclick="changePage('Matriz Inversa')">Matriz Inversa</button>

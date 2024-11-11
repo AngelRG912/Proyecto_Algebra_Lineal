@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MatrixCalc</title>
+    <link rel="stylesheet" href="/frontend/src/styles/sel.css" />
+    <style>
+      /* Añadir estilo para organizar la cuadrícula de la matriz */
+      #matrix-container {
+        display: grid;
+        grid-template-columns: repeat(4, 80px); /* 4 columnas */
+        gap: 10px; /* Espaciado entre los inputs */
+      }
+      .input-matrix {
+        width: 70px;
+        height: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <section class="logo">
+        <a href="/index.html"></a>
+        <img src="/frontend/src/assets/svg/logoW.svg" alt="MatrixCalc Logo" />
+      </a>
+      </section>
+      <section class="navbar">
+        <div class="elementnavbar">
+          <a href="/index.html">
+            <img src="/frontend/src/assets/svg/homeW.svg" alt="Inicio" />
+          </a>
+        </div>
+      </section>
+    </header>
+    <main>
+      <section class="matrix-input">
+        <h2>Calculadora de Matrices</h2>
+        <p>Puedes agregar filas y columnas de manera dinámica:</p>
+        <div class="matrix-controls">
+          <button onclick="addRow()">Agregar Fila</button>
+          <button onclick="addColumn()">Agregar Columna</button>
+          <button onclick="resetMatrix()">Resetear Matriz</button>
+          <button onclick="resolverSistemaGaussJordan() ">
+            Resolver Sistema de Ecuaciones Lineales
+          </button>
+        </div>
+        <div id="matrix-container-wrapper">
+          <div id="matrix-container"></div>
+        </div>
+      </section>
+      <section class="matrix-results">
+        <h2>Resultados</h2>
+        <div id="results-container"></div>
+      </section>
+    </main>
+    <footer>
+      <p>Derechos reservados MatrixCalc©️</p>
+    </footer>
+    <script src="/frontend/src/scripts/sel.js"></script>
+    <script src="/frontend/src/scripts/index.js" defer></script>
+    <!-- Enlace al JavaScript de la matriz -->
+  </body>
+</html>
