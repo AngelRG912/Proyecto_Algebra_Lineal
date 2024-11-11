@@ -1,10 +1,11 @@
 let matrix = []; // Inicializar la matriz como un array vacío
+let borderStyle = "5px";
 
 // Crear matriz visual en el contenedor HTML
 function createMatrix() {
   const params = new URLSearchParams(window.location.search);
   const titulo = params.get("titulo");
-  var borderStyle = "5px";
+
   const matrixContainer = document.getElementById("matrix-container");
   matrixContainer.innerHTML = ""; // Limpiar el contenedor
 
@@ -18,23 +19,31 @@ function createMatrix() {
       const td = document.createElement("td");
 
       const input = document.createElement("input");
-      input.type = "text";
-      input.value = cell;
+      //input.type = "text";
+      input.type = "number";
       input.style.width = "100px";
       input.style.padding = "8px";
       input.style.margin = "5px";
+
+      // Convertir a fracción si es necesario
+      input.value = isFraction(cell) ? fractionToString(cell) : cell;
 
       input.addEventListener("click", function () {
         this.select();
       });
 
       input.addEventListener("input", (e) => {
-        try {
-          const parsedValue = math.evaluate(e.target.value);
+        const inputValue = e.target.value;
+
+        // Verificar si el valor ingresado es una fracción o un número decimal
+        if (isFraction(inputValue)) {
+          const parsedFraction = stringToFraction(inputValue);
+          matrix[rowIndex][colIndex] = parsedFraction;
+        } else if (!isNaN(inputValue)) {
+          const parsedValue = parseFloat(inputValue);
           matrix[rowIndex][colIndex] = parsedValue;
-        } catch (error) {
-          console.warn("Entrada no válida. Se ignorará.");
-          matrix[rowIndex][colIndex] = 0; // Se asigna 0 si el valor no es válido
+        } else {
+          matrix[rowIndex][colIndex] = 0; // Si la entrada no es válida, asigna 0
         }
       });
 
@@ -63,6 +72,26 @@ function createMatrix() {
   }
   table.style.borderRadius = borderStyle;
   table.style.overflow = "auto";
+}
+
+// Función para verificar si un valor es una fracción
+function isFraction(value) {
+  const fractionRegex = /^-?\d+\/\d+$/;
+  return fractionRegex.test(value);
+}
+
+// Convertir una fracción a formato de texto (por ejemplo, "1/2")
+function fractionToString(value) {
+  return value.toString();
+}
+
+// Convertir una fracción en formato de texto a un valor numérico
+function stringToFraction(value) {
+  const [numerator, denominator] = value.split("/").map(Number);
+  if (denominator !== 0) {
+    return numerator / denominator;
+  }
+  return 0; // Retorna 0 si el denominador es 0
 }
 
 // Ajustar el tamaño de la matriz
@@ -166,12 +195,6 @@ function gaussJordan(matrix) {
     }
   }
 
-  // Notificar que el algoritmo ha terminado
-  showNotification(
-    "El algoritmo Gauss-Jordan se completó exitosamente.",
-    augmentedMatrix,
-    "success"
-  );
   return augmentedMatrix;
 }
 
@@ -301,7 +324,7 @@ function calculateMatrix() {
 }
 
 // Función para mostrar resultados en formato tabla
-function displayResult(resultMatrix, title = "Resultado") {
+function displayResult(resultMatrix, title = "Resultado:") {
   const resultsContainer = document.getElementById("results-container");
 
   // Crear la tabla para mostrar el resultado
@@ -315,61 +338,40 @@ function displayResult(resultMatrix, title = "Resultado") {
   titleCell.style.textAlign = "center";
   titleCell.style.fontWeight = "bold";
   titleCell.textContent = title;
+  titleCell.style.background = "none";
+  titleCell.style.border = "none";
   titleRow.appendChild(titleCell);
   tbody.appendChild(titleRow);
 
-  // Rellenar la tabla con los valores de la matriz
+  // Rellenar la tabla con los valores de la matriz en formato de fracción
   resultMatrix.forEach((row) => {
     const tr = document.createElement("tr");
     row.forEach((cell) => {
       const td = document.createElement("td");
-      td.textContent = cell.toFixed(2); // Mostramos los valores con 2 decimales
-      td.style.width = "100px";
+
+      // Convertir el valor a fracción y mostrarlo en la celda
+      td.textContent = decimalToFraction(cell);
+      td.style.width = "90px";
       td.style.padding = "8px";
-      td.style.margin = "5px";
       td.style.textAlign = "center";
-      td.style.border = "1px solid #ccc"; // Bordes similares a los inputs
-      td.style.backgroundColor = "#f9f9f9"; // Color de fondo similar al input
+      td.style.border = "1px solid #9d9d9d79";
+      td.style.whiteSpace = "nowrap";
       tr.appendChild(td);
     });
     tbody.appendChild(tr);
   });
 
   table.appendChild(tbody);
+
+  // Aplicar estilos a la tabla
+  table.style.borderRadius = "8px";
+  table.style.padding = "10px";
+  table.style.fontSize = "1.2em";
+
+  // Limpiar el contenedor antes de añadir la nueva tabla
+  resultsContainer.innerHTML = "";
   resultsContainer.appendChild(table);
 }
-
-/* Función para mostrar resultados en formato tabla, aplicando estilos de los inputs de la matriz
-function displayResult(resultMatrix) {
-  const resultsContainer = document.getElementById("results-container");
-
-  // Crear la tabla con estilos similares a los inputs de la matriz
-  const table = document.createElement("table");
-  const tbody = document.createElement("tbody");
-
-  resultMatrix.forEach((row) => {
-    const tr = document.createElement("tr");
-    row.forEach((cell) => {
-      const td = document.createElement("td");
-
-      // Aplicar estilos para que coincidan con los inputs
-      td.textContent = cell.toFixed(2);
-      td.style.width = "100px";
-      td.style.padding = "8px";
-      td.style.margin = "5px";
-      td.style.textAlign = "center";
-      td.style.border = "1px solid #ccc"; // Bordes similares a los inputs
-      td.style.backgroundColor = "#f9f9f9"; // Color de fondo similar al input
-      td.textContent = cell.toFixed(2); // Podrías aumentar los decimales si es necesario
-
-      tr.appendChild(td);
-    });
-    tbody.appendChild(tr);
-  });
-
-  table.appendChild(tbody);
-  resultsContainer.appendChild(table);
-}*/
 
 // Función para leer el archivo .txt y convertirlo a una matriz separada por comas
 function readFileAndUpdateMatrix(event) {
@@ -380,23 +382,27 @@ function readFileAndUpdateMatrix(event) {
   reader.onload = function (e) {
     const content = e.target.result; // Obtener el contenido del archivo
     const rows = content.trim().split("\n"); // Dividir el contenido en filas
+
     matrix = rows.map((row) => {
       // Para cada fila, dividir por comas
       return row
         .trim()
         .split(",")
         .map((cell) => {
-          // Convertir cada valor a número
-          const parsedValue = parseFloat(cell);
-          return isNaN(parsedValue) ? 0 : parsedValue; // Si no es un número, colocar 0
+          // Detectar si la celda es una fracción
+          if (cell.includes("/")) {
+            // Si es una fracción, convertirla a número
+            const [numerator, denominator] = cell.split("/").map(Number);
+            return denominator !== 0 ? numerator / denominator : 0; // Evitar divisiones por cero
+          } else {
+            // Si no es una fracción, convertir a número normal
+            const parsedValue = parseFloat(cell);
+            return isNaN(parsedValue) ? 0 : parsedValue; // Si no es un número, colocar 0
+          }
         });
     });
 
-    // Mostrar la matriz antes de la actualización con una notificación
-    showNotification("Matriz leída desde el archivo", matrix);
-
     createMatrix(); // Volver a renderizar la matriz
-    deleteResult();
   };
 
   reader.onerror = function (error) {
@@ -404,6 +410,30 @@ function readFileAndUpdateMatrix(event) {
   };
 
   reader.readAsText(file); // Leer el archivo como texto
+}
+
+// Función para convertir un decimal a fracción
+function decimalToFraction(decimal) {
+  if (Number.isInteger(decimal)) return decimal.toString();
+
+  const isNegative = decimal < 0;
+  decimal = Math.abs(decimal);
+
+  const tolerance = 1.0e-6;
+  let numerator = 1;
+  let denominator = 1;
+
+  while (Math.abs(numerator / denominator - decimal) > tolerance) {
+    if (numerator / denominator < decimal) {
+      numerator++;
+    } else {
+      denominator++;
+    }
+  }
+
+  return isNegative
+    ? `-${numerator}/${denominator}`
+    : `${numerator}/${denominator}`;
 }
 
 function showNotification(message, resultMatrix = null, type = "success") {

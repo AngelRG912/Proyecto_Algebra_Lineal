@@ -184,16 +184,8 @@ span {
 }
 
 /* Contenedor para ingresar la matriz*/
+#equalities-container,
 #matrix-container {
-  display: flex;
-  width: auto;
-  justify-content: center;
-  align-items: center;
-  padding: 10px;
-  overflow-x: auto;
-}
-
-#augmented-matrix-container {
   display: flex;
   width: auto;
   justify-content: center;
@@ -213,11 +205,21 @@ table {
   box-sizing: border-box;
 }
 
-td {
+#matrix-container input {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
   background-color: #ffffff;
+  border: 1px solid #9d9d9d79;
+  min-width: 80px;
+  box-sizing: border-box;
+  font-size: 1.2em;
+  padding: 5px; /* Añadir espacio interno para mejorar la interacción */
+  text-align: center;
+  white-space: nowrap; /* Evita que el texto se envuelva en una nueva línea */
 }
 
-#matrix-container input {
+#equalities-container input {
   display: inline-block;
   width: 100%;
   height: 100%;
@@ -242,24 +244,14 @@ td {
 #results-container {
   display: flex;
   width: auto;
-  padding: 1rem;
+  padding: 10px;
   background-color: #e9f5ff;
   border-radius: 5px;
   min-height: 100px;
-  margin-bottom: 1rem;
+  margin-bottom: 10px;
   justify-content: center;
   align-items: center;
-  padding: 10px;
   overflow-x: auto;
-}
-
-.result-cell {
-  width: 100px;
-  padding: 8px;
-  margin: 5px;
-  text-align: center;
-  border: 1px solid #ccc;
-  background-color: #f9f9f9;
 }
 
 /* Pie de página */
