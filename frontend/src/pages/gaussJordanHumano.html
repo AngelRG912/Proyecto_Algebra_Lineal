@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Operaciones Elementales en Matrices</title>
+    <style>
+      /* Estilos generales */
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        height: 100vh;
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-color: #f4f6f8;
+        color: #333;
+      }
+      /* Contenedor principal */
+      .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+        width: 1000px;
+        min-height: 600px;
+      }
+      /* Contenedor para la matriz */
+      #matrixContainer {
+        display: grid;
+        gap: 5px;
+        margin-top: 15px;
+      }
+      /* "Cajitas" de la matriz */
+      .matrix-cell {
+        width: 50px;
+        height: 50px;
+        border: 1px solid #333;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+      }
+      /* Estilos de entrada y botón */
+      input,
+      select,
+      button {
+        margin: 5px;
+      }
+      /* Estilo para el panel de operaciones */
+      #operationPanel {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-left: 20px;
+        padding: 10px;
+        border-left: 2px solid #333;
+      }
+      /* Contenedor de las matrices resultantes (desplazable) */
+      #resultContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 20px;
+        width: 100%;
+        height: 300px;
+        overflow-y: auto;
+        padding-right: 10px;
+        border-top: 2px solid #333;
+      }
+      /* Contenedor para la matriz con operación */
+      .result-block {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 20px;
+        width: 100%;
+      }
+      /* Contenedor para la matriz resultante */
+      .result-matrix {
+        display: grid;
+        gap: 5px;
+        margin-top: 10px;
+      }
+      /* Estilo para la notación de la operación */
+      .operation-text {
+        margin-top: 10px;
+        font-size: 16px;
+        font-weight: bold;
+      }
+      /* Botón de restablecer */
+      #resetButton {
+        margin-top: 15px;
+        padding: 10px 20px;
+        background-color: #ff6f61;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+      #resetButton:hover {
+        background-color: #e55b4f;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div style="display: flex; justify-content: space-between; width: 100%">
+        <div>
+          <h1>Gauss Jordan Humanizado</h1>
+          <!-- Carga del archivo -->
+          <input type="file" id="fileInput" accept=".txt" />
+          <button onclick="procesarArchivo()">Cargar Matriz</button>
+          <!-- Contenedor para la matriz original -->
+          <div id="matrixContainer"></div>
+          <!-- Botón para restablecer y eliminar última operación -->
+          <button id="resetButton" onclick="restablecerTodo()">
+            Restablecer
+          </button>
+          <button id="undoButton" onclick="eliminarUltimaOperacion()">
+            Eliminar Última Operación
+          </button>
+        </div>
+        <!-- Panel de operaciones -->
+        <div id="operationPanel">
+          <h3>Operaciones</h3>
+          <select id="operacion">
+            <option value="sumar">Sumar Fila</option>
+            <option value="multiplicar">Multiplicar Fila por Escalar</option>
+            <option value="intercambiar">Intercambiar Filas</option>
+          </select>
+          <!-- Elementos para seleccionar filas y escalar -->
+          <input type="number" id="fila1" placeholder="Fila 1" />
+          <input
+            type="text"
+            id="escalar"
+            placeholder="Escalar (ej: 1/2)"
+            style="display: none"
+          />
+          <input
+            type="number"
+            id="fila2"
+            placeholder="Fila 2"
+            style="display: none"
+          />
+          <button onclick="aplicarOperacion()">Aplicar Operación</button>
+        </div>
+      </div>
+      <!-- Contenedor para las matrices resultantes (desplazable) -->
+      <div id="resultContainer"></div>
+    </div>
+
+    <script>
+      let matrizOriginal = [];
+      let matrizActual = [];
+      let historialOperaciones = [];
+
+      function procesarArchivo() {
+        const fileInput = document.getElementById("fileInput");
+        const matrixContainer = document.getElementById("matrixContainer");
+
+        if (fileInput.files.length === 0) {
+          alert("Por favor, selecciona un archivo.");
+          return;
+        }
+
+        const file = fileInput.files[0];
+        const reader = new FileReader();
+
+        reader.onload = function (event) {
+          const contenido = event.target.result;
+          matrizOriginal = detectarValoresMatriz(contenido);
+          matrizActual = JSON.parse(JSON.stringify(matrizOriginal));
+          historialOperaciones = [JSON.parse(JSON.stringify(matrizActual))];
+          mostrarMatriz(matrizOriginal, matrixContainer);
+        };
+
+        reader.readAsText(file);
+      }
+
+      function detectarValoresMatriz(texto) {
+        return texto
+          .trim()
+          .split("\n")
+          .map((fila) =>
+            fila
+              .trim()
+              .split(/[\s,]+/)
+              .map(convertirValor)
+          );
+      }
+
+      function convertirValor(valor) {
+        if (valor.includes("/")) {
+          const [numerador, denominador] = valor.split("/").map(Number);
+          return numerador / denominador;
+        } else {
+          return parseFloat(valor);
+        }
+      }
+
+      function mostrarMatriz(matriz, contenedor) {
+        contenedor.innerHTML = "";
+        const filas = matriz.length;
+        const columnas = matriz[0].length;
+        contenedor.style.gridTemplateColumns = `repeat(${columnas}, 50px)`;
+        contenedor.style.gridTemplateRows = `repeat(${filas}, 50px)`;
+
+        matriz.forEach((fila) => {
+          fila.forEach((valor) => {
+            const cell = document.createElement("div");
+            cell.classList.add("matrix-cell");
+            cell.textContent = fraccionTexto(valor);
+            contenedor.appendChild(cell);
+          });
+        });
+      }
+
+      function fraccionTexto(valor) {
+        if (Number.isInteger(valor)) return valor;
+        const gcd = (a, b) => (b ? gcd(b, a % b) : a);
+        const denominador = 10 ** valor.toString().split(".")[1].length;
+        const numerador = valor * denominador;
+        const divisorComun = gcd(numerador, denominador);
+        return `${Math.round(numerador / divisorComun)}/${Math.round(
+          denominador / divisorComun
+        )}`;
+      }
+
+      document
+        .getElementById("operacion")
+        .addEventListener("change", function () {
+          const operacion = document.getElementById("operacion").value;
+          document.getElementById("escalar").style.display =
+            operacion === "multiplicar" ? "inline" : "none";
+          document.getElementById("fila2").style.display =
+            operacion !== "multiplicar" ? "inline" : "none";
+        });
+
+      function aplicarOperacion() {
+        const operacion = document.getElementById("operacion").value;
+        const fila1 = parseInt(document.getElementById("fila1").value) - 1;
+        const fila2 = parseInt(document.getElementById("fila2").value) - 1;
+        const escalar = convertirValor(
+          document.getElementById("escalar").value
+        );
+
+        if (
+          isNaN(fila1) ||
+          (operacion !== "multiplicar" && isNaN(fila2)) ||
+          (operacion === "multiplicar" && isNaN(escalar))
+        ) {
+          alert("Por favor, completa los campos necesarios.");
+          return;
+        }
+
+        let textoOperacion;
+        let nuevaMatriz = JSON.parse(JSON.stringify(matrizActual));
+
+        switch (operacion) {
+          case "sumar":
+            nuevaMatriz[fila1] = nuevaMatriz[fila1].map(
+              (v, i) => v + nuevaMatriz[fila2][i]
+            );
+            textoOperacion = `F${fila1 + 1} = F${fila1 + 1} + F${fila2 + 1}`;
+            break;
+          case "multiplicar":
+            nuevaMatriz[fila1] = nuevaMatriz[fila1].map((v) => v * escalar);
+            textoOperacion = `F${fila1 + 1} = ${fraccionTexto(escalar)} * F${
+              fila1 + 1
+            }`;
+            break;
+          case "intercambiar":
+            [nuevaMatriz[fila1], nuevaMatriz[fila2]] = [
+              nuevaMatriz[fila2],
+              nuevaMatriz[fila1],
+            ];
+            textoOperacion = `F${fila1 + 1} <-> F${fila2 + 1}`;
+            break;
+        }
+
+        historialOperaciones.push(JSON.parse(JSON.stringify(nuevaMatriz)));
+        matrizActual = nuevaMatriz;
+        agregarResultado(matrizActual, textoOperacion);
+      }
+
+      function agregarResultado(matriz, textoOperacion) {
+        const resultContainer = document.getElementById("resultContainer");
+        const resultBlock = document.createElement("div");
+        resultBlock.classList.add("result-block");
+
+        const operationText = document.createElement("p");
+        operationText.classList.add("operation-text");
+        operationText.textContent = textoOperacion;
+
+        const resultMatrix = document.createElement("div");
+        resultMatrix.classList.add("result-matrix");
+        resultMatrix.style.gridTemplateColumns = `repeat(${matriz[0].length}, 50px)`;
+
+        matriz.forEach((fila) => {
+          fila.forEach((valor) => {
+            const cell = document.createElement("div");
+            cell.classList.add("matrix-cell");
+            cell.textContent = fraccionTexto(valor);
+            resultMatrix.appendChild(cell);
+          });
+        });
+
+        resultBlock.appendChild(operationText);
+        resultBlock.appendChild(resultMatrix);
+        resultContainer.appendChild(resultBlock);
+        resultContainer.scrollTop = resultContainer.scrollHeight;
+      }
+
+      function eliminarUltimaOperacion() {
+        if (historialOperaciones.length <= 1) {
+          alert("No hay más operaciones para deshacer.");
+          return;
+        }
+        historialOperaciones.pop();
+        matrizActual = historialOperaciones[historialOperaciones.length - 1];
+        const resultContainer = document.getElementById("resultContainer");
+        resultContainer.removeChild(resultContainer.lastChild);
+      }
+
+      function restablecerTodo() {
+        matrizActual = JSON.parse(JSON.stringify(matrizOriginal));
+        historialOperaciones = [JSON.parse(JSON.stringify(matrizOriginal))];
+        const matrixContainer = document.getElementById("matrixContainer");
+        mostrarMatriz(matrizOriginal, matrixContainer);
+        document.getElementById("resultContainer").innerHTML = "";
+      }
+    </script>
+  </body>
+</html>
