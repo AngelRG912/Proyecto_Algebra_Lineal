@@ -264,14 +264,6 @@ function calculateMatrix() {
         }
         break;
 
-      case "Sistema de Ecuaciones Líneales":
-        try {
-        } catch (error) {
-          resultsContainer.textContent = "Error en el Algoritmo Gauss-Jordan.";
-          showNotification("Error en el Algoritmo Gauss-Jordan", null); // Notificación de error
-        }
-        break;
-
       case "Determinante":
         try {
           // Verificar si la matriz es cuadrada antes de calcular el determinante
@@ -317,7 +309,7 @@ function calculateMatrix() {
 
       default:
         resultsContainer.textContent = "Seleccione una operación válida.";
-        showNotification("Operación no válida", null); // Notificación de error
+        showNotification("Operación no válida", "error"); // Notificación de error
     }
   } catch (error) {
     // General error handler
