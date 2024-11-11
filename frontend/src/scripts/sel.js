@@ -18,6 +18,9 @@ function createMatrix() {
 
   // Crear un campo de input y etiqueta para cada elemento de la matriz
   matrix.forEach((row, rowIndex) => {
+    const rowContainer = document.createElement("div");
+    rowContainer.classList.add("row-container"); // Contenedor para la fila
+
     row.forEach((value, colIndex) => {
       // Crear contenedor para el input y la etiqueta
       const inputContainer = document.createElement("div");
@@ -44,17 +47,20 @@ function createMatrix() {
       inputContainer.appendChild(input);
       inputContainer.appendChild(label);
 
-      // Agregar el contenedor al contenedor de la matriz
-      matrixContainer.appendChild(inputContainer);
+      // Agregar el contenedor de la entrada al contenedor de la fila
+      rowContainer.appendChild(inputContainer);
 
-      // Agregar el símbolo de igual antes del último input de cada fila
+      // Agregar el símbolo de igual solo antes del último input de cada fila
       if (colIndex === row.length - 2) {
         const equalSign = document.createElement("span");
         equalSign.innerHTML = "=";
         equalSign.classList.add("equal-sign");
-        matrixContainer.appendChild(equalSign);
+        rowContainer.appendChild(equalSign); // Agregar el signo igual al final de la fila
       }
     });
+
+    // Agregar la fila completa al contenedor de la matriz
+    matrixContainer.appendChild(rowContainer);
   });
 
   // Ajustar el estilo para mostrar los inputs en una cuadrícula 3x4

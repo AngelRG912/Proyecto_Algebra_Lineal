@@ -72,7 +72,9 @@ main {
   padding: 2rem;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  flex: 1; /* Hacer que ambos contenedores se expandan */
+  flex: 1;
+  overflow: hidden; /* Esto evitará que el contenido se desborde */
+  width: 100%; /* Asegura que el contenedor ocupe el 100% del ancho disponible */
 }
 
 .matrix-input h2,
@@ -97,29 +99,60 @@ main {
   border-radius: 5px;
   cursor: pointer;
   font-size: 1rem;
+  text-align: center;
+  width: 24%; /* Hacer que los botones ocupen el 100% del contenedor */
+  box-sizing: border-box; /* Asegura que el padding no haga que se desborden */
 }
 
 .matrix-controls button:hover {
   background-color: #555;
 }
 
-/*#matrix-container input {
+/* Contenedor de la matriz */
+#matrix-container {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(60px, 1fr));
+  grid-gap: 10px;
+  align-items: center;
+  justify-items: center;
+  padding: 10px;
+  width: 100%; /* Asegúrate de que el contenedor ocupe el 100% del ancho */
+  box-sizing: border-box;
+}
 
-}*/
+/* Contenedor de cada input */
+.input-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  text-align: center;
+  width: 100%;
+}
 
+/* Campo de input */
 .input-matrix {
-  width: 80px;
+  width: 60px;
   padding: 10px;
   text-align: center;
   font-size: 1rem;
-  margin: 5px;
+  margin: 0;
 }
-.inputs-container {
-  margin: 5px;
-  width: 15px;
-  text-align: center;
-  font-size: 2rem;
-  text-decoration: none;
+
+/* Etiquetas (x1, x2, etc.) */
+.matrix-label {
+  font-size: 1.2rem;
+  margin-left: 5px;
+}
+
+/* El signo igual */
+.equal-sign {
+  font-size: 1.5rem;
+}
+
+/* Contenedor de la fila (por si se necesita para estilizar) */
+.row-container {
+  display: contents; /* Permite que los elementos dentro de la fila se comporten como una celda de grid */
 }
 
 /* Resultados */
@@ -145,6 +178,23 @@ main {
   background-color: #555;
 }
 
+#matrix-container-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  overflow-x: auto; /* Permite desplazamiento horizontal si es necesario */
+}
+
+main {
+  display: flex;
+  justify-content: space-around;
+  padding: 2rem;
+  gap: 20px;
+  flex-grow: 1;
+  flex-wrap: wrap; /* Permite que los elementos se ajusten en pantallas pequeñas */
+}
+
 /* Pie de página */
 footer {
   text-align: center;
@@ -163,6 +213,57 @@ footer {
     flex-direction: column;
     text-align: center;
   }
+
+  #matrix-container {
+    grid-template-columns: repeat(
+      2,
+      1fr
+    ); /* Reducir el número de columnas en pantallas pequeñas */
+  }
+
+  .matrix-input,
+  .matrix-results {
+    padding: 1rem; /* Reducir padding en pantallas pequeñas */
+  }
+  /* Ajustar el tamaño de los botones en pantallas pequeñas */
+  .matrix-controls button,
+  .matrix-results button {
+    padding: 8px 12px; /* Reducir el padding */
+    font-size: 0.9rem; /* Reducir el tamaño de la fuente */
+    width: auto; /* Dejar que el ancho se ajuste al contenido */
+  }
+
+  .matrix-controls {
+    flex-direction: column; /* Apilar los botones en lugar de alinearlos horizontalmente */
+    align-items: stretch; /* Los botones ocuparán todo el ancho disponible */
+  }
+
+  /* Reducir el espacio entre los botones */
+  .matrix-controls button {
+    margin-bottom: 10px; /* Separación entre los botones */
+  }
+
+  /* Asegurar que las matrices también se ajusten a pantallas pequeñas */
+  #matrix-container {
+    grid-template-columns: repeat(
+      2,
+      1fr
+    ); /* Reducir el número de columnas en pantallas pequeñas */
+    gap: 5px; /* Reducir el espacio entre los elementos */
+  }
+
+  .matrix-input,
+  .matrix-results {
+    padding: 1rem; /* Reducir padding para que los contenedores se ajusten mejor */
+  }
+}
+
+/* Asegurar que el contenedor de los botones no se desborde */
+.matrix-controls {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap; /* Permite que los botones se envuelvan en pantallas más pequeñas */
+  align-items: center;
 }
 
 .matrix {

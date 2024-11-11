@@ -1,10 +1,14 @@
 let matrix = []; // Inicializar la matriz como un array vacío
 let borderStyle = "5px";
+let isInverseOperation = false;
 
 // Crear matriz visual en el contenedor HTML
 function createMatrix() {
   const params = new URLSearchParams(window.location.search);
   const titulo = params.get("titulo");
+
+  // Actualizar el valor de isInverseOperation
+  isInverseOperation = titulo === "Matriz Inversa";
 
   const matrixContainer = document.getElementById("matrix-container");
   matrixContainer.innerHTML = ""; // Limpiar el contenedor
@@ -114,16 +118,26 @@ function addRow() {
   const cols = matrix[0]?.length || 1;
   const newRow = Array(cols).fill(0);
   matrix.push(newRow);
+
+  if (isInverseOperation && matrix.length !== matrix[0].length) {
+    addColumn(); // Añade una columna adicional para mantener la matriz cuadrada
+  }
+
   createMatrix();
 }
 
-// Agregar una columna a la matriz
+// Agregar una Columna a la matriz
 function addColumn() {
   if (matrix.length === 0) {
     matrix.push([0]);
   } else {
     matrix.forEach((row) => row.push(0));
   }
+
+  if (isInverseOperation && matrix[0].length !== matrix.length) {
+    addRow(); // Añade una fila adicional para mantener la matriz cuadrada
+  }
+
   createMatrix();
 }
 
@@ -224,23 +238,33 @@ function createIdentityMatrix(size) {
 // Función para calcular la inversa
 function calculateInverse(matrix) {
   if (matrix.length !== matrix[0].length) {
-    throw new Error("La matriz no es cuadrada");
+    throw new Error(
+      "La matriz no es cuadrada. No se puede calcular la inversa."
+    );
   }
 
-  // Verificar el determinante de la matriz
   const determinant = calculateDeterminant(matrix);
   if (determinant === 0) {
     throw new Error("La matriz es singular y no tiene inversa.");
   }
 
-  // Crear la matriz identidad para mostrarla
-  const identityMatrix = createIdentityMatrix(matrix.length);
+  return math.inv(matrix); // Calcular la inversa usando math.js
+}
 
-  // Mostrar la matriz identidad antes de la inversa
-  displayResult(identityMatrix, "Matriz Identidad");
+// Eliminar duplicado de showNotification
+function showNotification(message, type = "success") {
+  const notificationContainer = document.getElementById(
+    "notification-container"
+  );
+  const notification = document.createElement("div");
+  notification.classList.add("notification", type);
+  notification.textContent = message;
+  notificationContainer.appendChild(notification);
 
-  // Calcular la inversa usando math.js
-  return math.inv(matrix);
+  setTimeout(() => {
+    notification.style.opacity = 0;
+    setTimeout(() => notification.remove(), 500);
+  }, 5000);
 }
 
 // Función para calcular y mostrar el resultado
@@ -260,7 +284,7 @@ function calculateMatrix() {
           showNotification("Algoritmo Gauss-Jordan completado", result); // Notificación de éxito
         } catch (error) {
           resultsContainer.textContent = "Error en el Algoritmo Gauss-Jordan.";
-          showNotification("Error en el Algoritmo Gauss-Jordan", null); // Notificación de error
+          showNotification("Error en el Algoritmo Gauss-Jordan", "error"); // Notificación de error
         }
         break;
 
@@ -280,11 +304,15 @@ function calculateMatrix() {
           if (error.message === "La matriz no es cuadrada") {
             resultsContainer.textContent =
               "La matriz no es cuadrada. No se puede calcular el determinante.";
-            showNotification("La matriz no es cuadrada", null); // Notificación de error
+            showNotification("La matriz no es cuadrada", "error"); // Notificación de error
           } else {
             resultsContainer.textContent =
               "Error en el cálculo del determinante.";
-            showNotification("Error en el cálculo del determinante", null); // Notificación de error
+            showNotification(
+              "Error en el cálculo del determinante",
+              null,
+              "error"
+            ); // Notificación de error
           }
         }
         break;
@@ -298,11 +326,14 @@ function calculateMatrix() {
           if (error.message === "La matriz es singular y no tiene inversa.") {
             resultsContainer.textContent =
               "La matriz es singular y no tiene inversa.";
-            showNotification("La matriz no tiene inversa", null); // Notificación de error
+            showNotification("La matriz no tiene inversa", "error"); // Notificación de error
           } else {
             resultsContainer.textContent =
               "Error en el cálculo de la matriz inversa.";
-            showNotification("Error en el cálculo de la matriz inversa", null); // Notificación de error
+            showNotification(
+              "Error en el cálculo de la matriz inversa",
+              "error"
+            ); // Notificación de error
           }
         }
         break;
@@ -396,7 +427,7 @@ function readFileAndUpdateMatrix(event) {
           }
         });
     });
-
+    deleteResult();
     createMatrix(); // Volver a renderizar la matriz
 
     // Resetear el input de archivo para permitir la carga de un archivo igual
@@ -425,8 +456,11 @@ function decimalToFraction(decimal) {
     }
   }
 
+  // Si el denominador es 1, devuelve solo el numerador
   return isNegative
-    ? `-${numerator}/${denominator}`
+    ? `-${numerator}`
+    : denominator === 1
+    ? `${numerator}`
     : `${numerator}/${denominator}`;
 }
 
@@ -501,25 +535,32 @@ function showNotification(message, type = "success") {
 
 // Función para copiar al portapapeles
 function copyResult() {
-  const resultText = document
-    .getElementById("results-container")
-    .textContent.trim();
-  if (resultText) {
-    // Copiar al portapapeles
-    navigator.clipboard.writeText(resultText).then(
-      () => {
-        // Mostrar notificación de éxito
-        showNotification("Resultado copiado al portapapeles!", "success");
-      },
-      (err) => {
-        // Mostrar notificación de error
-        showNotification("Error al copiar el resultado.", "error");
-        console.error("Error al copiar al portapapeles: ", err);
-      }
-    );
+  const resultContainer = document.getElementById("results-container");
+  if (resultContainer) {
+    const rows = Array.from(resultContainer.querySelectorAll("tr"));
+    let tableText = "";
+
+    rows.forEach((row) => {
+      const cells = Array.from(row.querySelectorAll("td, th"));
+      const rowText = cells.map((cell) => cell.textContent.trim()).join("\t");
+      tableText += rowText + "\n";
+    });
+
+    if (tableText.trim()) {
+      navigator.clipboard.writeText(tableText.trim()).then(
+        () => {
+          showNotification("Tabla copiada al portapapeles!", "success");
+        },
+        (err) => {
+          showNotification("Error al copiar la tabla.", "error");
+          console.error("Error al copiar al portapapeles: ", err);
+        }
+      );
+    } else {
+      showNotification("No hay resultados para copiar.", "error");
+    }
   } else {
-    // Mostrar notificación de error si no hay contenido para copiar
-    showNotification("No hay resultados para copiar.", "error");
+    showNotification("No se encontró el contenedor de resultados.", "error");
   }
 }
 
