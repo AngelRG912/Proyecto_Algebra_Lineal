@@ -49,11 +49,17 @@ header .logo img {
 /* Estilos para el título */
 .titulo {
   text-align: center; /* Centra el texto dentro del contenedor */
-  flex-grow: 1; /* Permite que el título ocupe todo el espacio disponible */
+  flex-grow: 1;
+  width: 100%;
 }
 
 /* Si necesitas que el título esté centrado sin que afecte a los otros elementos */
 #titulo h2 {
+  font-size: clamp(
+    1.5rem,
+    5vw,
+    3rem
+  ); /* Mínimo 1.5rem, máximo 3rem, fluido entre esos valores */
   margin: 0;
 }
 
@@ -131,6 +137,9 @@ footer {
     flex-direction: row;
     padding: 4%;
   }
+  #titulo h2 {
+    font-size: 2rem; /* tamaño más grande para pantallas grandes */
+  }
 
   .container-menu {
     max-width: 400px;
@@ -146,6 +155,9 @@ footer {
   body {
     flex-direction: column;
     justify-content: space-between;
+  }
+  titulo h2 {
+    font-size: 1.5rem; /* tamaño más pequeño para pantallas medianas */
   }
 
   header {
@@ -170,6 +182,10 @@ footer {
   footer {
     text-align: center;
     padding: 0.5rem;
+  }
+
+  #titulo h2 {
+    font-size: 1.2rem; /* aún más pequeño para pantallas pequeñas */
   }
 
   .menu button {
