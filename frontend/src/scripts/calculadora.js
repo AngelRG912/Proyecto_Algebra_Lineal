@@ -133,6 +133,9 @@ function resetMatrix() {
   addRow();
   deleteResult();
   createMatrix();
+
+  // Resetear el input de archivo para permitir la carga de un archivo igual
+  document.getElementById("fileInput").value = ""; // Esto permite volver a cargar el mismo archivo
 }
 
 // Función para limpiar la matriz
@@ -403,10 +406,9 @@ function readFileAndUpdateMatrix(event) {
     });
 
     createMatrix(); // Volver a renderizar la matriz
-  };
 
-  reader.onerror = function (error) {
-    console.error("Error al leer el archivo", error);
+    // Resetear el input de archivo para permitir la carga de un archivo igual
+    event.target.value = ""; // Esto permite volver a cargar el mismo archivo
   };
 
   reader.readAsText(file); // Leer el archivo como texto
