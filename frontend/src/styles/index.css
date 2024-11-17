@@ -130,14 +130,9 @@ footer {
 
 /* ===== MEDIA QUERIES ===== */
 @media (max-width: 768px) {
-  * {
-    margin: 0;
-    padding: 0;
-  }
   body {
-    flex-direction: column;
     overflow-x: hidden;
-    width: 95.5vw;
+    width: 100vw;
   }
 
   header {
