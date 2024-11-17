@@ -5,24 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Inicio- MatrixCalc</title>
     <link rel="stylesheet" href="frontend/src/styles/index.css" />
-    <script>
-      function changePage(operation) {
-        // Cambiar a la página de calculadora con el parámetro 'titulo' en la URL
-        window.location.href = `/frontend/src/pages/calculadora.html?titulo=${operation}`;
-      }
-
-      function sel() {
-        // Cambiar a la página de calculadora con el parámetro 'titulo' en la URL
-        window.location.href = `/frontend/src/pages/sel.html`;
-      }
-
-      function gjh() {
-        window.location.href = `/frontend/src/pages/gaussJordanHumano.html`;
-      }
-    </script>
   </head>
   <body>
-    <header class="header">
+    <header>
       <section class="logo">
         <a href="index.html">
           <img src="/frontend/src/assets/svg/logoW.svg" alt="MatrixCalc-Logo" />
@@ -57,5 +42,20 @@
     <footer>
       <p>Derechos reservados MatrixCalc©</p>
     </footer>
+    <script>
+      function changePage(operation) {
+        // Cambiar a la página de calculadora con el parámetro 'titulo' en la URL
+        window.location.href = `/frontend/src/pages/calculadora.html?titulo=${operation}`;
+      }
+
+      function sel() {
+        // Cambiar a la página de calculadora con el parámetro 'titulo' en la URL
+        window.location.href = `/frontend/src/pages/sel.html`;
+      }
+
+      function gjh() {
+        window.location.href = `/frontend/src/pages/gaussJordanHumano.html`;
+      }
+    </script>
   </body>
 </html>

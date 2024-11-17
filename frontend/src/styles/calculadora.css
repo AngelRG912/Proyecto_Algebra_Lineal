@@ -1,89 +1,100 @@
+/* ===== GLOBAL ===== */
 * {
   margin: 0;
   padding: 0;
   width: auto;
 }
 
-/* General */
-body {
-  width: auto;
-  height: auto;
-  font-family: Arial, sans-serif;
-  background-color: #000000;
-  color: #303030;
-  display: flex;
-  flex-direction: column;
+html {
+  overflow-x: hidden;
 }
 
-/* Encabezado */
-header {
-  display: flex;
-  width: auto;
-  flex-direction: row;
+body {
+  font-family: Arial, sans-serif;
   justify-content: space-between;
-  align-items: center;
-  padding: 1rem;
   background-color: #000000;
+  flex-direction: column;
+  align-items: center;
+  color: #303030;
+  display: flex;
+  width: 100vw;
+}
+
+header,
+main,
+footer {
+  align-items: center;
+  display: flex;
+  width: 100vw;
+}
+
+/* ===== ENCABEZADO ===== */
+header {
+  justify-content: space-between;
+  background-color: #000000;
+  flex-direction: row;
+  padding: 1rem;
   color: #fff;
 }
 
 header .logo img {
   height: 50px;
+  padding-left: 1rem;
 }
 
-header .navbar {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
+#name-operation h2 {
+  font-size: 2vw;
+  width: 100%;
 }
 
 header .elementnavbar a img {
   height: 32px;
   width: 32px;
+  padding-right: 2rem;
 }
 
-/* Contenido Principal */
+/* ===== CONTENIDO PRINCIPAL ===== */
 main {
-  display: flex;
-  width: auto;
   background-color: #3a3a3a;
   justify-content: center;
   flex-direction: column;
-  padding: 2rem;
+  flex-wrap: wrap;
+  padding: 1.5rem;
+  display: flex;
   gap: 20px;
+  flex: 1;
 }
 
-/* Contenedor de las notificaciones */
+/* ===== NOTIFICACIONES ===== */
 #notification-container {
+  flex-direction: column;
+  max-width: 300px;
   position: fixed;
-  bottom: 20px; /* Ajusta la distancia desde el fondo */
-  right: 20px; /* Ajusta la distancia desde el borde derecho */
-  z-index: 9999; /* Asegura que se muestren encima de otros elementos */
   display: flex;
-  flex-direction: column; /* Apilar las notificaciones verticalmente */
-  gap: 10px; /* Espacio entre las notificaciones */
-  max-width: 300px; /* Opcional: Controla el ancho máximo */
+  z-index: 9999;
+  bottom: 20px;
+  right: 20px;
+  gap: 10px;
 }
 
-/* Estilo para cada notificación */
 .notification {
-  background-color: #4caf50; /* Verde para éxito */
-  color: white;
-  padding: 15px;
-  border-radius: 5px;
-  font-size: 16px;
-  font-weight: bold;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  opacity: 1;
-  transition: opacity 0.5s ease-in-out; /* Desvanecimiento de la notificación */
-  display: flex;
+  transition: opacity 0.5s ease-in-out;
+  justify-content: space-between;
+  background-color: #4caf50;
   align-items: center;
-  justify-content: space-between; /* Para colocar texto y botón de cerrar si es necesario */
-  min-width: 250px; /* Tamaño mínimo de la notificación */
+  border-radius: 5px;
+  font-weight: bold;
+  min-width: 250px;
+  font-size: 16px;
+  color: white;
+  display: flex;
+  padding: 15px;
+  opacity: 1;
 }
 
 .notification.error {
-  background-color: #f44336; /* Rojo para errores */
+  background-color: #f44336;
 }
 
 .notification pre {
@@ -92,86 +103,102 @@ main {
 }
 
 .notification .close-btn {
-  background: none;
-  border: none;
-  color: white;
-  font-size: 18px;
   font-weight: bold;
-  cursor: pointer;
   margin-left: 10px;
+  background: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: white;
+  border: none;
 }
 
+/* ===== CONTENEDORES DE MATRICES ===== */
 .matrix-input,
 .matrix-results {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: auto;
-  background-color: #ffffff;
-  padding: 1rem;
-  border-radius: 8px;
   box-shadow: 0 0 10px rgb(0, 0, 0);
+  background-color: #ffffff;
+  flex-direction: column;
+  border-radius: 8px;
+  min-width: 77%;
+  display: flex;
+  padding: 1rem;
 }
 
 .matrix-input h2,
 .matrix-results h2 {
-  color: #000000;
   margin-bottom: 1rem;
+  color: #000;
 }
 
-/* Contenedor de los de agregar/subir/limpiar botones */
-.matrix-controls {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 10px;
-  align-items: center;
-}
-
-/*Subir Matriz*/
-.file-upload {
-  display: none;
-}
-
-.custom-button {
-  display: flex;
-  align-items: center;
+#matrix-container-wrapper {
   justify-content: center;
-  height: fit-content;
-  margin-top: 10px;
-  padding: 10px 15px;
-  background-color: #333;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 1rem;
+  align-items: center;
+  display: flex;
 }
 
-.custom-button:hover {
-  background-color: #555;
+#matrix-container {
+  justify-content: center;
+  align-items: center;
+  overflow-x: auto;
+  display: grid;
+  padding: 10px;
+  gap: 10px;
 }
 
-.img-matrix-controls {
-  width: 24px;
-  height: 24px;
+/* ===== TABLA DE MATRICES ===== */
+table {
+  border: 1px solid #3a3a3a;
+  justify-content: flex-start;
+  background-color: #fff;
+  border-bottom: none;
+  text-align: center;
+  border-top: none;
+  display: flex;
+}
+
+tbody {
+  background-color: #9d9d9d79;
+}
+
+#matrix-container input {
+  border: 1px solid #9d9d9d79;
+  background-color: #ff00ff;
+  box-sizing: border-box;
+  display: inline-block;
+  white-space: nowrap;
+  text-align: center;
+  font-size: 1.2em;
+  min-width: 80px;
+  height: 100%;
+  padding: 5px;
+}
+
+/* ===== BOTONES ===== */
+.matrix-controls {
+  align-items: center;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  display: flex;
+  gap: 10px;
 }
 
 .matrix-controls button,
 .matrix-results button {
-  padding: 10px 15px;
-  margin-top: 10px;
+  transition: background-color 0.3s ease;
   background-color: #333;
-  color: #fff;
-  border: none;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
   border-radius: 5px;
+  padding: 10px 15px;
+  text-align: center;
+  margin-top: 10px;
   cursor: pointer;
   font-size: 1rem;
-  text-align: right;
+  color: #fff;
+  border: none;
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  text-align: center;
 }
 
 span {
@@ -183,107 +210,104 @@ span {
   background-color: #555;
 }
 
-/* Contenedor para ingresar la matriz*/
-#matrix-container {
-  display: flex;
-  width: auto;
-  justify-content: center;
-  align-items: center;
-  padding: 10px;
-  overflow-x: auto;
-}
-
-table {
-  display: flex;
-  width: auto;
-  justify-content: flex-start;
-  border-collapse: collapse;
-  border: 1px solid #3a3a3a;
-  border-top: none;
-  border-bottom: none;
-  box-sizing: border-box;
-}
-
-#matrix-container input {
-  display: inline-block;
-  width: 100%;
-  height: 100%;
-  background-color: #ffffff;
-  border: 1px solid #9d9d9d79;
-  min-width: 80px;
-  box-sizing: border-box;
-  font-size: 1.2em;
-  padding: 5px; /* Añadir espacio interno para mejorar la interacción */
-  text-align: center;
-  white-space: nowrap; /* Evita que el texto se envuelva en una nueva línea */
+.img-matrix-controls {
+  height: 24px;
+  width: 24px;
 }
 
 #calculate {
-  display: flex;
-  width: 100%;
   justify-content: center;
   align-items: center;
+  display: flex;
 }
 
-/* Resultados */
-#results-container {
+/* ===== BOTONES EXTRA (SUBIR MATRIZ) ===== */
+.file-upload {
+  display: none;
+}
+
+.custom-button {
+  background-color: #333;
+  justify-content: center;
+  align-items: center;
+  height: fit-content;
+  border-radius: 5px;
+  padding: 10px 15px;
+  margin-top: 10px;
+  cursor: pointer;
+  font-size: 1rem;
   display: flex;
-  width: auto;
-  padding: 10px;
+  color: #fff;
+  border: none;
+}
+
+.custom-button:hover {
+  background-color: #555;
+}
+
+/* ===== RESULTADOS ===== */
+#results-container {
   background-color: #e9f5ff;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
   border-radius: 5px;
   min-height: 100px;
-  margin-bottom: 10px;
-  justify-content: center;
-  align-items: center;
-  overflow-x: auto;
+  padding: 10px;
+  display: flex;
 }
 
-/* Pie de página */
+/* ===== PIE DE PÁGINA ===== */
 footer {
-  width: auto;
-  text-align: center;
-  padding: 1rem;
   background-color: #000000;
+  justify-content: center;
+  text-align: center;
   color: #fff;
+  padding: 1rem;
 }
 
-/* Ajuste de botones y secciones en pantallas pequeñas */
+/* ===== MEDIA QUERIES ===== */
 @media (max-width: 768px) {
   main {
     flex-direction: column;
-    align-items: center;
+  }
+
+  header {
+    flex-direction: row;
+    text-align: center;
   }
 
   .matrix-input,
   .matrix-results {
+    padding: 1rem;
+  }
+
+  .matrix-controls button {
+    margin-bottom: 10px;
+    padding: 8px 12px;
+    font-size: 0.9rem;
     width: auto;
   }
 
-  .navbar .menu {
+  .matrix-controls {
     flex-direction: column;
-    align-items: center;
-  }
-
-  header .navbar .menu button {
-    width: auto;
+    align-items: stretch;
   }
 }
 
-/* Ajustes adicionales para pantallas muy pequeñas */
 @media (max-width: 576px) {
   header,
   footer {
     text-align: center;
   }
 
-  .matrix-controls button,
-  .matrix-controls input {
+  .navbar .menu button {
+    margin-bottom: 5px;
     width: auto;
   }
 
-  .navbar .menu button {
+  .matrix-controls button,
+  .matrix-controls input {
     width: auto;
-    margin-bottom: 5px;
   }
 }

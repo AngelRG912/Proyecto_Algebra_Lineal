@@ -8,10 +8,15 @@
   </head>
   <body>
     <header>
-      <section class="logo">
-        <a href="../../../index.html">
-          <img src="/frontend/src/assets/svg/logoW.svg" alt="MatrixCalc-Logo" />
-        </a>
+      <section>
+        <div class="logo">
+          <a href="../../../index.html">
+            <img
+              src="/frontend/src/assets/svg/logoW.svg"
+              alt="MatrixCalc-Logo"
+            />
+          </a>
+        </div>
       </section>
       <section>
         <div id="name-operation">
@@ -73,8 +78,10 @@
             <span>Resetear Matriz</span>
           </button>
         </div>
-        <div id="matrix-container">
-          <!--Aquí es el container de la table y los inputs-->
+        <div id="matrix-container-wrapper">
+          <div id="matrix-container">
+            <!--Aquí es el container de la table y los inputs-->
+          </div>
         </div>
         <div class="matrix-controls" id="calculate" view="flex">
           <button onclick="calculateMatrix()" class="matrix-button">
