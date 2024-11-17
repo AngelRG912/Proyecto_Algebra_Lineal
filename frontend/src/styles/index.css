@@ -156,9 +156,11 @@ footer {
     width: 80%;
   }
 
-  #titulo h2 {
+  .container-menu h2 {
+    font-size: 5vw;
+  }
+  .container-menu p {
     font-size: 4vw;
-    margin: 0;
   }
 
   main {
@@ -179,60 +181,5 @@ footer {
 
   footer {
     background-color: rgb(0, 0, 0);
-  }
-}
-
-@media (max-width: 576px) {
-  body {
-    padding: 0.5rem;
-  }
-
-  header .logo img {
-    height: 35px; /* Ajustar el tamaño del logo para pantallas muy pequeñas */
-  }
-
-  #titulo h2 {
-    font-size: 5vw; /* Ajuste aún mayor para el tamaño del título */
-  }
-
-  .container-menu {
-    padding: 0.5rem;
-    width: 100%;
-  }
-
-  .menu button {
-    font-size: 0.8rem; /* Reducir aún más el tamaño de los botones */
-    padding: 6px 10px;
-  }
-
-  footer {
-    padding: 0.5rem;
-  }
-}
-
-@media (min-width: 768px) and (max-width: 1024px) {
-  header {
-    flex-direction: row;
-    padding: 2rem;
-  }
-
-  header .logo img {
-    left: 2rem; /* Ajuste de espaciado para pantallas medianas */
-    top: 1rem;
-    height: 45px; /* Ajustar el tamaño del logo */
-  }
-
-  #titulo h2 {
-    font-size: 3vw; /* Tamaño intermedio para el título */
-  }
-
-  .container-menu {
-    max-width: 80%;
-    padding: 1.5rem;
-  }
-
-  .menu button {
-    font-size: 1rem; /* Tamaño normal de los botones */
-    padding: 12px 18px;
   }
 }
