@@ -465,38 +465,6 @@ function decimalToFraction(decimal) {
     : `${numerator}/${denominator}`;
 }
 
-function showNotification(message, resultMatrix = null, type = "success") {
-  const notificationContainer = document.getElementById(
-    "notification-container"
-  );
-
-  // Crear el div para la notificación
-  const notification = document.createElement("div");
-  notification.classList.add("notification");
-
-  // Aplica el tipo de notificación (error o éxito)
-  if (type === "error") {
-    notification.classList.add("error");
-  }
-
-  // Si hay una matriz de resultados, mostrarla en la notificación
-  if (resultMatrix) {
-    const result = resultMatrix.map((row) => row.join(", ")).join("\n");
-    notification.innerHTML = `<strong>${message}</strong><pre>${result}</pre>`;
-  } else {
-    notification.textContent = message;
-  }
-
-  // Agregar la notificación al contenedor
-  notificationContainer.appendChild(notification);
-
-  // Eliminar la notificación después de 5 segundos
-  setTimeout(() => {
-    notification.style.opacity = 0;
-    setTimeout(() => notification.remove(), 500); // Eliminarla después de que se desvanezca
-  }, 5000); // La notificación durará 5 segundos
-}
-
 // Agregar el event listener para manejar la carga de archivo
 document
   .getElementById("fileInput")
