@@ -1,11 +1,14 @@
-/* ===== RESET GENERAL ===== */
+/* ===== GENERAL ===== */
 * {
   margin: 0;
   padding: 0;
   width: auto;
 }
 
-/* ===== GENERAL ===== */
+html {
+  overflow-x: hidden;
+}
+
 body {
   font-family: Arial, sans-serif;
   justify-content: space-between;
@@ -28,21 +31,16 @@ footer {
 
 /* ===== ENCABEZADO ===== */
 header {
+  justify-content: space-between;
   background-color: #000000;
   flex-direction: row;
-  position: relative;
-  padding: 2.5rem;
+  padding: 1rem;
   color: #fff;
 }
 
 header .logo img {
-  align-items: center;
-  padding-left: 1rem;
-  position: absolute;
-  display: flex;
   height: 50px;
-  left: 3rem;
-  top: 1rem;
+  padding-left: 1rem;
 }
 
 header .titulo {
@@ -64,11 +62,8 @@ header .titulo {
 main {
   background-color: #3a3a3a;
   flex-direction: column;
-  flex-wrap: wrap;
   padding: 1.5rem;
   display: flex;
-  gap: 20px;
-  flex: 1;
 }
 
 .container-menu {
@@ -77,10 +72,8 @@ main {
   flex-direction: column;
   align-items: center;
   border-radius: 10px;
-  max-width: 350px;
   display: flex;
   padding: 1rem;
-  width: 100%;
 }
 
 .container-menu h2 {
@@ -125,56 +118,288 @@ footer {
   text-align: center;
   color: #fff;
   padding: 1rem;
-  width: auto;
 }
 
 /* ===== MEDIA QUERIES ===== */
-@media (max-width: 768px) {
+
+/*Teléfonos pequeños */
+@media (max-width: 480px) {
+  body,
+  header,
+  main,
+  footer {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* Evita desplazamiento horizontal */
+    width: 100vw; /* Ancho completo */
+  }
+
   body {
-    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Altura completa del viewport */
+  }
+
+  header,
+  footer {
+    padding: 10px;
+  }
+
+  main {
+    flex-grow: 1; /* Ocupa el espacio restante */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centrar contenido verticalmente */
+    align-items: center; /* Centrar contenido horizontalmente */
+  }
+
+  main .container-menu {
+    width: 80vw; /* Ajuste del ancho del menú */
+    max-width: 400px; /* Limitar el ancho máximo */
+    text-align: center; /* Centrar texto */
+  }
+
+  main .container-menu h2 {
+    font-size: 6vw; /* Escala proporcional al ancho del viewport */
+    margin-bottom: 10px;
+  }
+
+  main .container-menu p {
+    font-size: 4.5vw; /* Escala proporcional */
+    line-height: 1.4; /* Mejor legibilidad */
+  }
+
+  main .menu button {
+    font-size: 1rem; /* Tamaño de fuente accesible */
+    padding: 10px 15px; /* Espaciado adecuado */
+    cursor: pointer;
+  }
+}
+
+/*Tablets y teléfonos grandes*/
+@media (min-width: 481px) and (max-width: 768px) {
+  body,
+  header,
+  main,
+  footer {
+    overflow: hidden;
     width: 100vw;
+    padding: 0;
+    margin: 0;
   }
 
-  header {
-    background-color: rgb(0, 0, 0);
-    padding: 2rem;
-    width: 87%;
+  body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
   }
 
-  header .logo img {
-    left: 1.5rem; /* Reduces el espacio a la izquierda para pantallas pequeñas */
-    top: 0.75rem;
-    height: 40px;
+  header,
+  footer {
+    padding: 10px;
   }
 
-  header .titulo {
-    width: 80%;
-  }
-
-  .container-menu h2 {
+  header .titulo h2 {
     font-size: 5vw;
   }
-  .container-menu p {
+
+  main {
+    flex-grow: 1; /* Ocupa el espacio restante */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centrar contenido verticalmente */
+    align-items: center; /* Centrar contenido horizontalmente */
+  }
+
+  main .container-menu {
+    width: 60vw; /* Ajuste del ancho del menú */
+    text-align: center; /* Centrar texto */
+  }
+
+  main .container-menu h2 {
+    font-size: 4vw; /* Escala proporcional al ancho del viewport */
+    margin-bottom: 10px;
+  }
+
+  main .container-menu p {
+    font-size: 3vw; /* Escala proporcional */
+    line-height: 1.4; /* Mejor legibilidad */
+  }
+
+  main .menu button {
+    font-size: 2.5vw; /* Tamaño de fuente accesible */
+    padding: 10px 15px; /* Espaciado adecuado */
+    cursor: pointer;
+  }
+}
+
+/*Tablets en orientación horizontal o pantallas medianas*/
+@media (min-width: 769px) and (max-width: 1024px) {
+  body,
+  header,
+  main,
+  footer {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* Evita desplazamiento horizontal */
+    width: 100vw; /* Ancho completo */
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Altura completa del viewport */
+  }
+
+  header,
+  footer {
+    padding: 10px;
+  }
+
+  header .titulo h2 {
     font-size: 4vw;
   }
 
   main {
+    flex-grow: 1; /* Ocupa el espacio restante */
+    display: flex;
     flex-direction: column;
-    padding: 1.5rem;
-    gap: 10px;
-    width: 91%;
+    justify-content: center; /* Centrar contenido verticalmente */
+    align-items: center; /* Centrar contenido horizontalmente */
   }
 
-  .container-menu {
-    max-width: 80%;
+  main .container-menu {
+    width: 45vw; /* Ajuste del ancho del menú */
+    text-align: center; /* Centrar texto */
   }
 
-  .menu button {
-    font-size: 0.9rem; /* Reducir el tamaño de los botones en pantallas pequeñas */
-    padding: 8px 12px;
+  main .container-menu h2 {
+    font-size: 3vw; /* Escala proporcional al ancho del viewport */
+    margin-bottom: 10px;
   }
 
+  main .container-menu p {
+    font-size: 2vw; /* Escala proporcional */
+    line-height: 1.4; /* Mejor legibilidad */
+  }
+
+  main .menu button {
+    font-size: 1.5vw; /* Tamaño de fuente accesible */
+    padding: 10px 15px; /* Espaciado adecuado */
+    cursor: pointer;
+  }
+}
+
+/*Laptops y pantallas de escritorio pequeñas*/
+@media (min-width: 1025px) and (max-width: 1200px) {
+  body,
+  header,
+  main,
   footer {
-    background-color: rgb(0, 0, 0);
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* Evita desplazamiento horizontal */
+    width: 100vw; /* Ancho completo */
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Altura completa del viewport */
+  }
+
+  header,
+  footer {
+    padding: 10px;
+  }
+
+  header .titulo h2 {
+    font-size: 4vw;
+  }
+
+  main {
+    flex-grow: 1; /* Ocupa el espacio restante */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centrar contenido verticalmente */
+    align-items: center; /* Centrar contenido horizontalmente */
+  }
+
+  main .container-menu {
+    width: 40vw; /* Ajuste del ancho del menú */
+    text-align: center; /* Centrar texto */
+  }
+
+  main .container-menu h2 {
+    font-size: 3vw; /* Escala proporcional al ancho del viewport */
+    margin-bottom: 10px;
+  }
+
+  main .container-menu p {
+    font-size: 2vw; /* Escala proporcional */
+    line-height: 1.4; /* Mejor legibilidad */
+  }
+
+  main .menu button {
+    font-size: 1.5vw; /* Tamaño de fuente accesible */
+    padding: 10px 15px; /* Espaciado adecuado */
+    cursor: pointer;
+  }
+}
+
+/*pantallas grandes (desktops y televisores)*/
+@media (min-width: 1201px) {
+  body,
+  header,
+  main,
+  footer {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* Evita desplazamiento horizontal */
+    width: 100vw; /* Ancho completo */
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Altura completa del viewport */
+  }
+
+  header,
+  footer {
+    padding: 10px;
+  }
+
+  header .titulo h2 {
+    font-size: 4vw;
+  }
+
+  main {
+    flex-grow: 1; /* Ocupa el espacio restante */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centrar contenido verticalmente */
+    align-items: center; /* Centrar contenido horizontalmente */
+  }
+
+  main .container-menu {
+    width: 45w; /* Ajuste del ancho del menú */
+    text-align: center; /* Centrar texto */
+  }
+
+  main .container-menu h2 {
+    font-size: 3vw; /* Escala proporcional al ancho del viewport */
+    margin-bottom: 10px;
+  }
+
+  main .container-menu p {
+    font-size: 2vw; /* Escala proporcional */
+    line-height: 1.4; /* Mejor legibilidad */
+  }
+
+  main .menu button {
+    font-size: 1.5vw; /* Tamaño de fuente accesible */
+    padding: 10px 15px; /* Espaciado adecuado */
+    cursor: pointer;
   }
 }

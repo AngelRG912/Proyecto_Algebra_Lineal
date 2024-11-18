@@ -5,6 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Inicio- MatrixCalc</title>
     <link rel="stylesheet" href="frontend/src/styles/index.css" />
+    <script>
+      function changePage(operation) {
+        // Cambiar a la página de calculadora con el parámetro 'titulo' en la URL
+        window.location.href = `/frontend/src/pages/calculadora.html?titulo=${operation}`;
+      }
+
+      function sel() {
+        // Cambiar a la página de calculadora con el parámetro 'titulo' en la URL
+        window.location.href = `/frontend/src/pages/sel.html`;
+      }
+
+      function gjh() {
+        window.location.href = `/frontend/src/pages/gaussJordanHumano.html`;
+      }
+    </script>
   </head>
   <body>
     <header>
@@ -17,11 +32,10 @@
         <h2>INICIO</h2>
       </section>
     </header>
-
     <main>
       <section class="container-menu">
-        <h2>Operaciones de Matrices</h2>
-        <p>Seleccione una operación:</p>
+        <h2>Funciones de Matrices</h2>
+        <p>Seleccione una función:</p>
         <div class="menu">
           <button onclick="changePage('Algoritmo Gauss-Jordan')">
             Algoritmo Gauss-Jordan
@@ -40,20 +54,5 @@
     <footer>
       <p>Derechos reservados MatrixCalc©</p>
     </footer>
-    <script>
-      function changePage(operation) {
-        // Cambiar a la página de calculadora con el parámetro 'titulo' en la URL
-        window.location.href = `/frontend/src/pages/calculadora.html?titulo=${operation}`;
-      }
-
-      function sel() {
-        // Cambiar a la página de calculadora con el parámetro 'titulo' en la URL
-        window.location.href = `/frontend/src/pages/sel.html`;
-      }
-
-      function gjh() {
-        window.location.href = `/frontend/src/pages/gaussJordanHumano.html`;
-      }
-    </script>
   </body>
 </html>

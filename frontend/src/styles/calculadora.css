@@ -157,12 +157,12 @@ table {
 }
 
 tbody {
-  background-color: #9d9d9d79;
+  background-color: none;
 }
 
 #matrix-container input {
   border: 1px solid #9d9d9d79;
-  background-color: #ff00ff;
+  background-color: none;
   box-sizing: border-box;
   display: inline-block;
   white-space: nowrap;
@@ -267,19 +267,18 @@ footer {
 }
 
 /* ===== MEDIA QUERIES ===== */
-@media (max-width: 768px) {
-  body {
-    overflow-x: hidden;
+
+/*Teléfonos pequeños */
+@media (max-width: 480px) {
+  body,
+  header,
+  main,
+  footer {
     width: 100vw;
   }
 
-  main {
-    flex-direction: column;
-  }
-
-  header {
-    flex-direction: row;
-    text-align: center;
+  body {
+    overflow-x: hidden;
   }
 
   #name-operation h2 {
@@ -288,6 +287,8 @@ footer {
 
   .matrix-input,
   .matrix-results {
+    max-width: 80vw;
+    min-width: 80vw;
     padding: 1rem;
   }
 
@@ -299,5 +300,155 @@ footer {
   .matrix-controls {
     flex-direction: column;
     align-items: stretch;
+  }
+}
+
+/*Tablets y teléfonos grandes*/
+@media (min-width: 481px) and (max-width: 768px) {
+  body,
+  header,
+  main,
+  footer {
+    width: 100vw;
+  }
+
+  body {
+    overflow-x: hidden;
+  }
+
+  #name-operation h2 {
+    font-size: 4vw;
+  }
+
+  .matrix-input,
+  .matrix-results {
+    max-width: 80vw;
+    min-width: 80vw;
+    padding: 1rem;
+  }
+
+  .matrix-controls button {
+    font-size: 1rem;
+    width: auto;
+  }
+
+  .matrix-controls img {
+    width: 2vw;
+    height: 2vh;
+  }
+
+  .custom-button img {
+    width: 2vw;
+    height: 2vh;
+  }
+
+  .matrix-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+/*Tablets en orientación horizontal o pantallas medianas*/
+@media (min-width: 769px) and (max-width: 1024px) {
+  body,
+  header,
+  main,
+  footer {
+    width: 100vw;
+  }
+
+  body {
+    overflow-x: hidden;
+  }
+
+  #name-operation h2 {
+    font-size: 4vw;
+  }
+
+  .matrix-input,
+  .matrix-results {
+    max-width: 85vw;
+    min-width: 85vw;
+    padding: 1rem;
+  }
+
+  .matrix-controls button {
+    font-size: 0.9rem;
+    width: auto;
+  }
+
+  .matrix-controls {
+    align-items: center;
+    flex-direction: row;
+  }
+}
+
+/*Laptops y pantallas de escritorio pequeñas*/
+@media (min-width: 1025px) and (max-width: 1200px) {
+  body,
+  header,
+  main,
+  footer {
+    width: 100vw;
+  }
+
+  body {
+    overflow-x: hidden;
+  }
+
+  #name-operation h2 {
+    font-size: 4vw;
+  }
+
+  .matrix-input,
+  .matrix-results {
+    max-width: 85vw;
+    min-width: 85vw;
+    padding: 1rem;
+  }
+
+  .matrix-controls button {
+    font-size: 0.9rem;
+    width: auto;
+  }
+
+  .matrix-controls {
+    align-items: center;
+    flex-direction: row;
+  }
+}
+
+/*pantallas grandes (desktops y televisores)*/
+@media (min-width: 1201px) {
+  body,
+  header,
+  main,
+  footer {
+    width: 100vw;
+  }
+
+  body {
+    overflow-x: hidden;
+  }
+
+  #name-operation h2 {
+    font-size: 4vw;
+  }
+
+  .matrix-input,
+  .matrix-results {
+    max-width: 85vw;
+    min-width: 85vw;
+    padding: 1rem;
+  }
+
+  .matrix-controls button {
+    font-size: 0.9rem;
+    width: auto;
+  }
+
+  .matrix-controls {
+    align-items: center;
+    flex-direction: row;
   }
 }

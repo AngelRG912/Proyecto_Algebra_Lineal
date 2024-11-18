@@ -393,6 +393,7 @@ function displayResult(resultMatrix, title = "Resultado:") {
   table.style.borderRadius = "8px";
   table.style.padding = "10px";
   table.style.fontSize = "1.2em";
+  table.style.overflowX = "auto";
 
   // Limpiar el contenedor antes de añadir la nueva tabla
   resultsContainer.innerHTML = "";
