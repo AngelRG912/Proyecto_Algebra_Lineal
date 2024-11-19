@@ -1,4 +1,6 @@
-// Función para resolver con Gauss-Jordan
+import { matrix } from "../matrixUtils.js";
+import { showNotification } from "./utils.js";
+
 export function gaussJordan(matrix) {
   const numRows = matrix.length;
   const numCols = matrix[0].length;
@@ -55,7 +57,6 @@ export function gaussJordan(matrix) {
   return augmentedMatrix;
 }
 
-// Función para calcular el determinante
 export function calculateDeterminant(matrix) {
   // Verificar si la matriz es cuadrada
   if (matrix.length === matrix[0].length) {
@@ -64,7 +65,6 @@ export function calculateDeterminant(matrix) {
   }
 }
 
-// Función para calcular la inversa
 export function calculateInverse(matrix) {
   if (matrix.length !== matrix[0].length) {
     throw new Error(
@@ -80,7 +80,6 @@ export function calculateInverse(matrix) {
   return math.inv(matrix); // Calcular la inversa usando math.js
 }
 
-// Función para generar la matriz identidad
 export function createIdentityMatrix(size) {
   const identityMatrix = [];
   for (let i = 0; i < size; i++) {

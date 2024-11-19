@@ -1,17 +1,6 @@
 // Eliminar duplicado de showNotification
-export function showNotification(message, type = "success") {
-  const notificationContainer = document.getElementById(
-    "notification-container"
-  );
-  const notification = document.createElement("div");
-  notification.classList.add("notification", type);
-  notification.textContent = message;
-  notificationContainer.appendChild(notification);
-
-  setTimeout(() => {
-    notification.style.opacity = 0;
-    setTimeout(() => notification.remove(), 500);
-  }, 5000);
+/*export function showNotification(message, type = "success") {
+  
 }
 
 // Función para mostrar notificaciones

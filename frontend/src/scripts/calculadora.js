@@ -470,38 +470,6 @@ document
   .getElementById("fileInput")
   .addEventListener("change", readFileAndUpdateMatrix);
 
-// Función para mostrar la notificación
-function showNotification(message, type = "success") {
-  // Crear un div para la notificación
-  const notification = document.createElement("div");
-  notification.classList.add("notification", type);
-
-  // Agregar el mensaje
-  notification.textContent = message;
-
-  // Crear el botón de cierre
-  const closeBtn = document.createElement("button");
-  closeBtn.textContent = "×";
-  closeBtn.classList.add("close-btn");
-  closeBtn.onclick = () => {
-    notification.style.opacity = 0; // Desvanecer la notificación
-    setTimeout(() => notification.remove(), 500); // Eliminarla después de 500ms
-  };
-
-  // Agregar el botón de cierre al div de la notificación
-  notification.appendChild(closeBtn);
-
-  // Agregar la notificación al contenedor de notificaciones
-  const container = document.getElementById("notification-container");
-  container.appendChild(notification);
-
-  // Hacer que la notificación se desvanezca después de 3 segundos
-  setTimeout(() => {
-    notification.style.opacity = 0;
-    setTimeout(() => notification.remove(), 500); // Eliminarla después de desvanecerse
-  }, 3000); // Duración de la notificación antes de desaparecer
-}
-
 // Función para copiar al portapapeles
 function copyResult() {
   const resultContainer = document.getElementById("results-container");

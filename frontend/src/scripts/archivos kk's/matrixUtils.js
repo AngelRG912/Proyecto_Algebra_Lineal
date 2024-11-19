@@ -1,8 +1,178 @@
-let matrix = []; // Inicializar la matriz como un array vacío
-let borderStyle = "5px";
-let isInverseOperation = false;
+export let matrix = [];
+export let borderStyle = "5px";
+export let isInverseOperation = false;
 
-// Función para calcular y mostrar el resultado
+export function createMatrix() {
+  const params = new URLSearchParams(window.location.search);
+  const titulo = params.get("titulo");
+
+  // Actualizar el valor de isInverseOperation
+  isInverseOperation = titulo === "Matriz Inversa";
+
+  const matrixContainer = document.getElementById("matrix-container");
+  matrixContainer.innerHTML = ""; // Limpiar el contenedor
+
+  // Crear una tabla para mejorar la visualización
+  const table = document.createElement("table");
+  const tbody = document.createElement("tbody");
+
+  matrix.forEach((row, rowIndex) => {
+    const tr = document.createElement("tr");
+    row.forEach((cell, colIndex) => {
+      const td = document.createElement("td");
+
+      const input = document.createElement("input");
+      //input.type = "text";
+      input.type = "number";
+      input.style.width = "100px";
+      input.style.padding = "8px";
+      input.style.margin = "5px";
+
+      // Convertir a fracción si es necesario
+      input.value = isFraction(cell) ? fractionToString(cell) : cell;
+
+      input.addEventListener("click", function () {
+        this.select();
+      });
+
+      input.addEventListener("input", (e) => {
+        const inputValue = e.target.value;
+
+        // Verificar si el valor ingresado es una fracción o un número decimal
+        if (isFraction(inputValue)) {
+          const parsedFraction = stringToFraction(inputValue);
+          matrix[rowIndex][colIndex] = parsedFraction;
+        } else if (!isNaN(inputValue)) {
+          const parsedValue = parseFloat(inputValue);
+          matrix[rowIndex][colIndex] = parsedValue;
+        } else {
+          matrix[rowIndex][colIndex] = 0; // Si la entrada no es válida, asigna 0
+        }
+      });
+
+      td.appendChild(input);
+      tr.appendChild(td);
+    });
+    tbody.appendChild(tr);
+  });
+
+  table.appendChild(tbody);
+  matrixContainer.appendChild(table);
+
+  switch (titulo) {
+    case "Algoritmo Gauss-Jordan":
+      break;
+    case "Sistema de Ecuaciones Líneales":
+      table.style.border = "none";
+      break;
+    case "Matriz Inversa":
+      break;
+    case "Determinante":
+      borderStyle = "0px";
+      break;
+    case "Gauss-Jordan-humanizado":
+      break;
+  }
+  table.style.borderRadius = borderStyle;
+  table.style.overflow = "auto";
+}
+
+export function adjustMatrix() {
+  const numRows = parseInt(document.getElementById("numRows").value);
+  const numCols = parseInt(document.getElementById("numCols").value);
+
+  matrix = Array.from({ length: numRows }, (_, rowIndex) =>
+    Array.from(
+      { length: numCols },
+      (_, colIndex) => matrix[rowIndex]?.[colIndex] ?? 0
+    )
+  );
+
+  createMatrix();
+}
+
+export function addRow() {
+  const cols = matrix[0]?.length || 1;
+  const newRow = Array(cols).fill(0);
+  matrix.push(newRow);
+
+  if (isInverseOperation && matrix.length !== matrix[0].length) {
+    addColumn(); // Añade una columna adicional para mantener la matriz cuadrada
+  }
+
+  createMatrix();
+}
+
+export function addColumn() {
+  if (matrix.length === 0) {
+    matrix.push([0]);
+  } else {
+    matrix.forEach((row) => row.push(0));
+  }
+
+  if (isInverseOperation && matrix[0].length !== matrix.length) {
+    addRow(); // Añade una fila adicional para mantener la matriz cuadrada
+  }
+
+  createMatrix();
+}
+
+export function readFileAndUpdateMatrix(event) {
+  const file = event.target.files[0]; // Obtener el archivo seleccionado
+  if (!file) return; // Si no se selecciona archivo, salir
+
+  const reader = new FileReader();
+  reader.onload = function (e) {
+    const content = e.target.result; // Obtener el contenido del archivo
+    const rows = content.trim().split("\n"); // Dividir el contenido en filas
+
+    matrix = rows.map((row) => {
+      // Para cada fila, dividir por comas
+      return row
+        .trim()
+        .split(",")
+        .map((cell) => {
+          // Detectar si la celda es una fracción
+          if (cell.includes("/")) {
+            // Si es una fracción, convertirla a número
+            const [numerator, denominator] = cell.split("/").map(Number);
+            return denominator !== 0 ? numerator / denominator : 0; // Evitar divisiones por cero
+          } else {
+            // Si no es una fracción, convertir a número normal
+            const parsedValue = parseFloat(cell);
+            return isNaN(parsedValue) ? 0 : parsedValue; // Si no es un número, colocar 0
+          }
+        });
+    });
+    deleteResult();
+    createMatrix(); // Volver a renderizar la matriz
+
+    // Resetear el input de archivo para permitir la carga de un archivo igual
+    event.target.value = ""; // Esto permite volver a cargar el mismo archivo
+  };
+
+  reader.readAsText(file); // Leer el archivo como texto
+}
+
+document
+  .getElementById("fileInput")
+  .addEventListener("change", readFileAndUpdateMatrix);
+
+export function clearMatrix() {
+  matrix = matrix.map((row) => row.map(() => 0)); // Establecer todos los valores en 0
+  createMatrix(); // Actualizar la visualización de la matriz
+}
+
+export function resetMatrix() {
+  matrix = [];
+  addRow();
+  deleteResult();
+  createMatrix();
+
+  // Resetear el input de archivo para permitir la carga de un archivo igual
+  document.getElementById("fileInput").value = ""; // Esto permite volver a cargar el mismo archivo
+}
+
 function calculateMatrix() {
   const params = new URLSearchParams(window.location.search);
   const titulo = params.get("titulo");
@@ -84,8 +254,7 @@ function calculateMatrix() {
   }
 }
 
-// Función para mostrar resultados en formato tabla
-function displayResult(resultMatrix, title = "Resultado:") {
+export function displayResult(resultMatrix, title = "Resultado:") {
   const resultsContainer = document.getElementById("results-container");
 
   // Crear la tabla para mostrar el resultado
@@ -135,51 +304,7 @@ function displayResult(resultMatrix, title = "Resultado:") {
   resultsContainer.appendChild(table);
 }
 
-// Función para leer el archivo .txt y convertirlo a una matriz separada por comas
-function readFileAndUpdateMatrix(event) {
-  const file = event.target.files[0]; // Obtener el archivo seleccionado
-  if (!file) return; // Si no se selecciona archivo, salir
-
-  const reader = new FileReader();
-  reader.onload = function (e) {
-    const content = e.target.result; // Obtener el contenido del archivo
-    const rows = content.trim().split("\n"); // Dividir el contenido en filas
-
-    matrix = rows.map((row) => {
-      // Para cada fila, dividir por comas
-      return row
-        .trim()
-        .split(",")
-        .map((cell) => {
-          // Detectar si la celda es una fracción
-          if (cell.includes("/")) {
-            // Si es una fracción, convertirla a número
-            const [numerator, denominator] = cell.split("/").map(Number);
-            return denominator !== 0 ? numerator / denominator : 0; // Evitar divisiones por cero
-          } else {
-            // Si no es una fracción, convertir a número normal
-            const parsedValue = parseFloat(cell);
-            return isNaN(parsedValue) ? 0 : parsedValue; // Si no es un número, colocar 0
-          }
-        });
-    });
-    deleteResult();
-    createMatrix(); // Volver a renderizar la matriz
-
-    // Resetear el input de archivo para permitir la carga de un archivo igual
-    event.target.value = ""; // Esto permite volver a cargar el mismo archivo
-  };
-
-  reader.readAsText(file); // Leer el archivo como texto
-}
-
-// Agregar el event listener para manejar la carga de archivo
-document
-  .getElementById("fileInput")
-  .addEventListener("change", readFileAndUpdateMatrix);
-
-// Función para copiar al portapapeles
-function copyResult() {
+export function copyResult() {
   const resultContainer = document.getElementById("results-container");
   if (resultContainer) {
     const rows = Array.from(resultContainer.querySelectorAll("tr"));
@@ -209,8 +334,7 @@ function copyResult() {
   }
 }
 
-// Función para borrar resultados
-function deleteResult() {
+export function deleteResult() {
   // Obtener el contenedor de resultados
   const resultsContainer = document.getElementById("results-container");
 
@@ -222,6 +346,3 @@ function deleteResult() {
     showNotification("No hay resultados para borrar.", "error");
   }
 }
-
-// Inicializar con una fila
-addRow();
