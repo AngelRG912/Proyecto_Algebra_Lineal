@@ -185,7 +185,6 @@ tbody {
 
 .matrix-controls button,
 .matrix-results button {
-  transition: background-color 0.3s ease;
   background-color: #333;
   justify-content: center;
   align-items: center;
@@ -219,6 +218,39 @@ span {
   justify-content: center;
   align-items: center;
   display: flex;
+}
+
+/* Animación de botones */
+.matrix-controls button,
+.matrix-results button,
+.matrix-controls .custom-button {
+  transition: all 0.3s ease-in-out; /* Animamos todos los cambios */
+  overflow: hidden; /* Oculta el texto cuando se reduce el tamaño */
+}
+
+.matrix-controls button.shrink,
+.matrix-results button.shrink,
+.matrix-controls .custom-button.shrink {
+  padding: 10px; /* Reduce el tamaño del botón */
+  justify-content: center;
+}
+
+.matrix-controls button:hover,
+.matrix-results button:hover,
+.matrix-controls .custom-button:hover {
+  padding: 10px 30px; /* Expande el botón en hover */
+}
+
+.matrix-controls button .img-matrix-controls,
+.matrix-results button .img-matrix-controls,
+.matrix-controls .custom-button .img-matrix-controls {
+  transition: transform 0.3s ease-in-out; /* Animación de la imagen */
+}
+
+.matrix-controls button:hover .img-matrix-controls,
+.matrix-results button:hover .img-matrix-controls,
+.matrix-controls .custom-button:hover .img-matrix-controls {
+  transform: scale(1.5); /* Agranda la imagen al pasar el cursor */
 }
 
 /* ===== BOTONES EXTRA (SUBIR MATRIZ) ===== */

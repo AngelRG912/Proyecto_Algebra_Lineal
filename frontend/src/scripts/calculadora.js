@@ -2,6 +2,12 @@ let matrix = []; // Inicializar la matriz como un array vacío
 let borderStyle = "5px";
 let isInverseOperation = false;
 
+document
+  .querySelectorAll(".matrix-controls button, .matrix-results button")
+  .forEach((button) => {
+    button.classList.add("shrink");
+  });
+
 // Crear matriz visual en el contenedor HTML
 function createMatrix() {
   const params = new URLSearchParams(window.location.search);
