@@ -28,10 +28,10 @@ footer {
   width: 100vw;
 }
 
-/* ===== ENCABEZADO ===== */
+/* ===== ENCABEZADO =====  #323d42 #202a31*/
 header {
   justify-content: space-between;
-  background-color: #000000;
+  background-color: #323d42;
   flex-direction: row;
   padding: 1rem;
   color: #fff;
@@ -53,9 +53,9 @@ header .elementnavbar a img {
   padding-right: 2rem;
 }
 
-/* ===== CONTENIDO PRINCIPAL ===== */
+/* ===== CONTENIDO PRINCIPAL #38524c #3a4852 =====*/
 main {
-  background-color: #3a3a3a;
+  background-color: #38524c;
   justify-content: center;
   flex-direction: column;
   flex-wrap: wrap;
@@ -173,7 +173,8 @@ tbody {
   padding: 5px;
 }
 
-/* ===== BOTONES ===== */
+/* ===== BOTONES ===== #323d42 hover #38524c
+#202a31 h #607685*/
 .matrix-controls {
   align-items: center;
   margin-bottom: 10px;
@@ -185,7 +186,7 @@ tbody {
 
 .matrix-controls button,
 .matrix-results button {
-  background-color: #333;
+  background-color: #323d42;
   justify-content: center;
   align-items: center;
   flex-direction: row;
@@ -206,7 +207,7 @@ span {
 
 .matrix-controls button:hover,
 .matrix-results button:hover {
-  background-color: #555;
+  background-color: #38524c;
 }
 
 .img-matrix-controls {
@@ -253,13 +254,14 @@ span {
   transform: scale(1.5); /* Agranda la imagen al pasar el cursor */
 }
 
-/* ===== BOTONES EXTRA (SUBIR MATRIZ) ===== */
+/* ===== BOTONES EXTRA (SUBIR MATRIZ) ===== #323d42 hover #38524c
+#202a31 #607685*/
 .file-upload {
   display: none;
 }
 
 .custom-button {
-  background-color: #333;
+  background-color: #323d42;
   justify-content: center;
   align-items: center;
   height: fit-content;
@@ -274,12 +276,12 @@ span {
 }
 
 .custom-button:hover {
-  background-color: #555;
+  background-color: #38524c;
 }
 
-/* ===== RESULTADOS ===== */
+/* ===== RESULTADOS ===== e9f5ff*/
 #results-container {
-  background-color: #e9f5ff;
+  background-color: #cbdced88;
   justify-content: center;
   align-items: center;
   margin-bottom: 10px;
